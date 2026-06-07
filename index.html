@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小郭的学习乐园 🌈</title>
+<style>
+  /* ========== 基础重置 & 佩奇风配色 ========== */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --pink: #F4A7C1;
+    --pink-light: #FDDDE6;
+    --pink-dark: #E8769A;
+    --blue: #7EC8E3;
+    --blue-light: #D4F1F9;
+    --blue-dark: #5BA8C8;
+    --yellow: #FFD93D;
+    --yellow-light: #FFF3B0;
+    --green: #6BCB77;
+    --green-light: #C8F7D0;
+    --orange: #FF8C42;
+    --red: #FF6B6B;
+    --purple: #C77DFF;
+    --white: #FFFFFF;
+    --text: #4A3728;
+    --shadow: 0 8px 30px rgba(0,0,0,0.12);
+  }
+
+  body {
+    font-family: 'Comic Sans MS', 'Segoe UI', 'Microsoft YaHei', sans-serif;
+    background: linear-gradient(180deg, #87CEEB 0%, #B5E8F7 35%, #90D88C 35%, #6BCB77 100%);
+    min-height: 100vh;
+    overflow: hidden;
+    color: var(--text);
+  }
+
+  /* ========== 天空中的云朵 ========== */
+  .cloud {
+    position: fixed;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.9;
+    z-index: 0;
+  }
+  .cloud::before, .cloud::after {
+    content: '';
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+  }
+  .cloud-1 { width: 120px; height: 50px; top: 30px; left: -150px; animation: floatCloud 25s linear infinite; }
+  .cloud-1::before { width: 60px; height: 60px; top: -30px; left: 20px; }
+  .cloud-1::after { width: 80px; height: 55px; top: -25px; left: 50px; }
+  
+  .cloud-2 { width: 100px; height: 40px; top: 80px; left: -120px; animation: floatCloud 30s linear infinite 8s; }
+  .cloud-2::before { width: 50px; height: 50px; top: -25px; left: 15px; }
+  .cloud-2::after { width: 65px; height: 45px; top: -20px; left: 40px; }
+  
+  .cloud-3 { width: 140px; height: 55px; top: 50px; left: -170px; animation: floatCloud 35s linear infinite 15s; }
+  .cloud-3::before { width: 70px; height: 65px; top: -35px; left: 25px; }
+  .cloud-3::after { width: 90px; height: 60px; top: -28px; left: 60px; }
+
+  @keyframes floatCloud {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(100vw + 300px)); }
+  }
+
+  /* ========== 太阳 ========== */
+  .sun {
+    position: fixed;
+    top: 20px;
+    right: 60px;
+    width: 80px;
+    height: 80px;
+    background: var(--yellow);
+    border-radius: 50%;
+    box-shadow: 0 0 40px var(--yellow), 0 0 80px rgba(255,217,61,0.3);
+    z-index: 0;
+    animation: sunPulse 3s ease-in-out infinite;
+  }
+  .sun-ray {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 4px;
+    background: var(--yellow);
+    border-radius: 2px;
+    transform-origin: center;
+    opacity: 0.6;
+  }
+  @keyframes sunPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  /* ========== 草地上的小花 ========== */
+  .flowers {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 65vh;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .flower {
+    position: absolute;
+    bottom: 0;
+    font-size: 28px;
+    animation: sway 3s ease-in-out infinite;
+  }
+  @keyframes sway {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+  }
+
+  /* ========== 主容器 ========== */
+  .container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  /* ========== 标题区 ========== */
+  .title-area {
+    text-align: center;
+    margin-bottom: 50px;
+    animation: bounceIn 1s ease-out;
+  }
+  .main-title {
+    font-size: 52px;
+    font-weight: bold;
+    color: var(--pink-dark);
+    text-shadow: 3px 3px 0 white, -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white;
+    letter-spacing: 4px;
+    animation: titleFloat 3s ease-in-out infinite;
+  }
+  .sub-title {
+    font-size: 20px;
+    color: #5B8C3E;
+    margin-top: 8px;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+  @keyframes titleFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  @keyframes bounceIn {
+    0% { opacity: 0; transform: translateY(-40px); }
+    60% { transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ========== 学科卡片 ========== */
+  .cards-area {
+    display: flex;
+    gap: 50px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .subject-card {
+    width: 260px;
+    height: 320px;
+    border-radius: 28px;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border: 4px solid rgba(255,255,255,0.7);
+    overflow: hidden;
+    animation: cardAppear 0.6s ease-out backwards;
+  }
+  .subject-card:nth-child(1) { animation-delay: 0.3s; }
+  .subject-card:nth-child(2) { animation-delay: 0.5s; }
+  .subject-card:nth-child(3) { animation-delay: 0.7s; }
+
+  @keyframes cardAppear {
+    0% { opacity: 0; transform: translateY(60px) scale(0.8); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .subject-card:hover {
+    transform: translateY(-12px) scale(1.05);
+    box-shadow: var(--shadow);
+  }
+  .subject-card:active {
+    transform: translateY(-4px) scale(0.98);
+  }
+
+  /* --- 语文卡片 --- */
+  .card-chinese {
+    background: linear-gradient(145deg, var(--pink-light), var(--pink));
+    box-shadow: 0 6px 25px rgba(244,167,193,0.4);
+  }
+  .card-chinese:hover { box-shadow: 0 12px 40px rgba(244,167,193,0.5); }
+
+  /* --- 数学卡片 --- */
+  .card-math {
+    background: linear-gradient(145deg, var(--blue-light), var(--blue));
+    box-shadow: 0 6px 25px rgba(126,200,227,0.4);
+  }
+  .card-math:hover { box-shadow: 0 12px 40px rgba(126,200,227,0.5); }
+
+  /* --- 英语卡片 --- */
+  .card-english {
+    background: linear-gradient(145deg, var(--yellow-light), var(--yellow));
+    box-shadow: 0 6px 25px rgba(255,217,61,0.4);
+  }
+  .card-english:hover { box-shadow: 0 12px 40px rgba(255,217,61,0.5); }
+
+  .card-icon {
+    font-size: 72px;
+    margin-bottom: 12px;
+    transition: transform 0.3s ease;
+    line-height: 1;
+  }
+  .subject-card:hover .card-icon {
+    transform: scale(1.15) rotate(-5deg);
+  }
+
+  .card-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.15);
+    margin-bottom: 8px;
+  }
+
+  .card-desc {
+    font-size: 14px;
+    color: rgba(255,255,255,0.85);
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  /* 卡片内的小装饰 */
+  .card-decoration {
+    position: absolute;
+    font-size: 20px;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .card-decoration:nth-child(1) { top: 12px; left: 15px; }
+  .card-decoration:nth-child(2) { top: 15px; right: 18px; }
+  .card-decoration:nth-child(3) { bottom: 15px; left: 20px; }
+  .card-decoration:nth-child(4) { bottom: 12px; right: 15px; }
+
+  /* ========== 卡片点击波纹 ========== */
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    transform: scale(0);
+    animation: rippleAnim 0.6s ease-out;
+    pointer-events: none;
+  }
+  @keyframes rippleAnim {
+    to { transform: scale(4); opacity: 0; }
+  }
+
+  /* ========== 底部小动物 ========== */
+  .bottom-animals {
+    position: fixed;
+    bottom: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .animal {
+    font-size: 42px;
+    animation: animalBounce 2s ease-in-out infinite;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: transform 0.2s;
+  }
+  .animal:hover { transform: scale(1.3) !important; }
+  .animal:nth-child(2) { animation-delay: 0.5s; }
+  .animal:nth-child(3) { animation-delay: 1s; }
+  @keyframes animalBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* ========== 星星积分栏 ========== */
+  .star-bar {
+    position: fixed;
+    top: 15px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.85);
+    padding: 8px 18px;
+    border-radius: 25px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+    z-index: 2;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--orange);
+    backdrop-filter: blur(5px);
+  }
+  .star-icon {
+    font-size: 24px;
+    animation: starSpin 3s ease-in-out infinite;
+  }
+  @keyframes starSpin {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(15deg) scale(1.1); }
+    75% { transform: rotate(-15deg) scale(1.1); }
+  }
+
+  /* ========== Toast 提示 ========== */
+  .toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: white;
+    padding: 30px 50px;
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    z-index: 100;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+    border: 3px solid var(--pink);
+  }
+  .toast.show {
+    transform: translate(-50%, -50%) scale(1);
+    animation: toastBounce 0.5s ease;
+  }
+  @keyframes toastBounce {
+    0% { transform: translate(-50%, -50%) scale(0); }
+    50% { transform: translate(-50%, -50%) scale(1.1); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+  }
+  .toast-emoji {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  /* ========== 粒子效果 ========== */
+  .particle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 99;
+    font-size: 24px;
+    animation: particleFly 1s ease-out forwards;
+  }
+  @keyframes particleFly {
+    0% { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-80px) scale(0.3); }
+  }
+</style>
+</head>
+<body>
+
+<!-- 天空装饰 -->
+<div class="sun">
+  <div class="sun-ray" style="transform: translate(-50%, -50%) rotate(0deg);"></div>
+  <div class="sun-ray" style="transform: translate(-50%, -50%) rotate(45deg);"></div>
+  <div class="sun-ray" style="transform: translate(-50%, -50%) rotate(90deg);"></div>
+  <div class="sun-ray" style="transform: translate(-50%, -50%) rotate(135deg);"></div>
+</div>
+<div class="cloud cloud-1"></div>
+<div class="cloud cloud-2"></div>
+<div class="cloud cloud-3"></div>
+
+<!-- 草地上的小花 -->
+<div class="flowers" id="flowers"></div>
+
+<!-- 星星积分 -->
+<div class="star-bar">
+  <span class="star-icon">⭐</span>
+  <span id="starCount">0</span> 颗星星
+</div>
+
+<!-- 主内容 -->
+<div class="container">
+  <div class="title-area">
+    <div class="main-title">🌈 小郭的学习乐园 🌈</div>
+    <div class="sub-title">选一个科目开始今天的学习吧！</div>
+  </div>
+
+  <div class="cards-area">
+    <!-- 语文卡片 -->
+    <div class="subject-card card-chinese" onclick="selectSubject('chinese', event)">
+      <span class="card-decoration">📖</span>
+      <span class="card-decoration">✏️</span>
+      <span class="card-decoration">📝</span>
+      <span class="card-decoration">📚</span>
+      <div class="card-icon">📖</div>
+      <div class="card-title">语文</div>
+      <div class="card-desc">古诗词 · 成语 · 生字词<br>快来感受汉字的魅力吧！</div>
+    </div>
+
+    <!-- 数学卡片 -->
+    <div class="subject-card card-math" onclick="selectSubject('math', event)">
+      <span class="card-decoration">🔢</span>
+      <span class="card-decoration">➕</span>
+      <span class="card-decoration">📐</span>
+      <span class="card-decoration">✖️</span>
+      <div class="card-icon">🔢</div>
+      <div class="card-title">数学</div>
+      <div class="card-desc">四则运算 · 分数 · 应用题<br>数学达人就是你！</div>
+    </div>
+
+    <!-- 英语卡片 -->
+    <div class="subject-card card-english" onclick="selectSubject('english', event)">
+      <span class="card-decoration">🔤</span>
+      <span class="card-decoration">💬</span>
+      <span class="card-decoration">🌍</span>
+      <span class="card-decoration">🎵</span>
+      <div class="card-icon">🔤</div>
+      <div class="card-title">英语</div>
+      <div class="card-desc">单词拼写 · 听力 · 语法<br>Let's learn English!</div>
+    </div>
+  </div>
+</div>
+
+<!-- 底部小动物 -->
+<div class="bottom-animals">
+  <div class="animal" onclick="animalClick(this, '🐷')">🐷</div>
+  <div class="animal" onclick="animalClick(this, '🐸')">🐸</div>
+  <div class="animal" onclick="animalClick(this, '🐰')">🐰</div>
+</div>
+
+<!-- Toast 提示 -->
+<div class="toast" id="toast">
+  <span class="toast-emoji" id="toastEmoji"></span>
+  <span id="toastText"></span>
+</div>
+
+<script>
+  // ========== 生成草地小花 ==========
+  const flowerEmojis = ['🌸', '🌼', '🌺', '🌻', '🌷', '💐', '🌹', '🌿'];
+  const flowersContainer = document.getElementById('flowers');
+  for (let i = 0; i < 20; i++) {
+    const flower = document.createElement('div');
+    flower.className = 'flower';
+    flower.textContent = flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)];
+    flower.style.left = Math.random() * 100 + '%';
+    flower.style.bottom = Math.random() * 60 + 'px';
+    flower.style.fontSize = (18 + Math.random() * 18) + 'px';
+    flower.style.animationDelay = Math.random() * 3 + 's';
+    flower.style.animationDuration = (2.5 + Math.random() * 2) + 's';
+    flowersContainer.appendChild(flower);
+  }
+
+  // ========== 星星积分 ==========
+  let totalStars = parseInt(localStorage.getItem('totalStars') || '0');
+  document.getElementById('starCount').textContent = totalStars;
+
+  function addStars(n) {
+    totalStars += n;
+    localStorage.setItem('totalStars', totalStars);
+    const el = document.getElementById('starCount');
+    el.textContent = totalStars;
+    el.style.transform = 'scale(1.5)';
+    setTimeout(() => el.style.transition = 'transform 0.3s', 0);
+    setTimeout(() => el.style.transform = 'scale(1)', 300);
+  }
+
+  // ========== 点击波纹效果 ==========
+  function createRipple(event, element) {
+    const ripple = document.createElement('div');
+    ripple.className = 'ripple';
+    const rect = element.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    ripple.style.width = ripple.style.height = size + 'px';
+    ripple.style.left = (event.clientX - rect.left - size / 2) + 'px';
+    ripple.style.top = (event.clientY - rect.top - size / 2) + 'px';
+    element.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
+  }
+
+  // ========== 粒子效果 ==========
+  function spawnParticles(x, y, emojis) {
+    for (let i = 0; i < 8; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      p.style.left = (x + (Math.random() - 0.5) * 100) + 'px';
+      p.style.top = (y + (Math.random() - 0.5) * 40) + 'px';
+      p.style.animationDelay = (Math.random() * 0.3) + 's';
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 1500);
+    }
+  }
+
+  // ========== Toast 提示 ==========
+  function showToast(emoji, text, duration = 2000) {
+    const toast = document.getElementById('toast');
+    document.getElementById('toastEmoji').textContent = emoji;
+    document.getElementById('toastText').textContent = text;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), duration);
+  }
+
+  // ========== 选择学科 ==========
+  const subjectInfo = {
+    chinese: { emoji: '📖', name: '语文', particles: ['📖', '✏️', '📝', '🌸'] },
+    math:    { emoji: '🔢', name: '数学', particles: ['🔢', '➕', '➖', '⭐'] },
+    english: { emoji: '🔤', name: '英语', particles: ['🔤', '💬', '🌈', '⭐'] }
+  };
+
+  function selectSubject(subject, event) {
+    createRipple(event, event.currentTarget);
+    const info = subjectInfo[subject];
+    spawnParticles(event.clientX, event.clientY, info.particles);
+
+    if (subject === 'math') {
+      // 数学模块已开发，跳转到单元目录页
+      setTimeout(() => { window.location.href = 'math.html'; }, 400);
+    } else {
+      showToast(info.emoji, info.name + ' 学习模块开发中...\n敬请期待！🚀', 2000);
+    }
+  }
+
+  // ========== 底部小动物互动 ==========
+  const animalSounds = { '🐷': '哼哼～', '🐸': '呱呱～', '🐰': '蹦蹦～' };
+  function animalClick(el, animal) {
+    showToast(animal, animalSounds[animal], 1500);
+    addStars(1);
+    spawnParticles(el.getBoundingClientRect().left + 20, el.getBoundingClientRect().top, ['⭐', '✨', '💛']);
+  }
+</script>
+</body>
+</html>

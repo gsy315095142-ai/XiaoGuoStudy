@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔢 数学乐园 - 小郭的学习乐园</title>
+<style>
+  /* ========== 基础重置 & 佩奇风配色 ========== */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --pink: #F4A7C1;
+    --pink-light: #FDDDE6;
+    --pink-dark: #E8769A;
+    --blue: #7EC8E3;
+    --blue-light: #D4F1F9;
+    --blue-dark: #5BA8C8;
+    --yellow: #FFD93D;
+    --yellow-light: #FFF3B0;
+    --green: #6BCB77;
+    --green-light: #C8F7D0;
+    --orange: #FF8C42;
+    --red: #FF6B6B;
+    --purple: #C77DFF;
+    --teal: #2EC4B6;
+    --white: #FFFFFF;
+    --text: #4A3728;
+    --shadow: 0 8px 30px rgba(0,0,0,0.12);
+  }
+
+  body {
+    font-family: 'Comic Sans MS', 'Segoe UI', 'Microsoft YaHei', sans-serif;
+    background: linear-gradient(180deg, #87CEEB 0%, #B5E8F7 35%, #90D88C 35%, #6BCB77 100%);
+    min-height: 100vh;
+    color: var(--text);
+  }
+
+  /* ========== 云朵 ========== */
+  .cloud {
+    position: fixed;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.85;
+    z-index: 0;
+  }
+  .cloud::before, .cloud::after {
+    content: '';
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+  }
+  .cloud-1 { width: 100px; height: 42px; top: 25px; left: -130px; animation: floatCloud 28s linear infinite; }
+  .cloud-1::before { width: 50px; height: 50px; top: -25px; left: 18px; }
+  .cloud-1::after { width: 68px; height: 46px; top: -22px; left: 42px; }
+  .cloud-2 { width: 130px; height: 50px; top: 65px; left: -160px; animation: floatCloud 34s linear infinite 12s; }
+  .cloud-2::before { width: 65px; height: 58px; top: -30px; left: 22px; }
+  .cloud-2::after { width: 82px; height: 52px; top: -24px; left: 55px; }
+
+  @keyframes floatCloud {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(100vw + 300px)); }
+  }
+
+  /* ========== 太阳 ========== */
+  .sun {
+    position: fixed;
+    top: 18px;
+    right: 50px;
+    width: 65px;
+    height: 65px;
+    background: var(--yellow);
+    border-radius: 50%;
+    box-shadow: 0 0 35px var(--yellow), 0 0 70px rgba(255,217,61,0.25);
+    z-index: 0;
+    animation: sunPulse 3s ease-in-out infinite;
+  }
+  @keyframes sunPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+  }
+
+  /* ========== 顶部导航栏 ========== */
+  .top-bar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 30px;
+    background: rgba(255,255,255,0.88);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+  }
+  .back-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--blue-dark);
+    cursor: pointer;
+    padding: 8px 18px;
+    border-radius: 20px;
+    background: var(--blue-light);
+    border: 2px solid var(--blue);
+    transition: all 0.25s;
+    text-decoration: none;
+  }
+  .back-btn:hover {
+    background: var(--blue);
+    color: white;
+    transform: translateX(-4px);
+  }
+  .page-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--blue-dark);
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.8);
+  }
+  .star-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 17px;
+    font-weight: bold;
+    color: var(--orange);
+  }
+  .star-bar .star-icon {
+    font-size: 22px;
+    animation: starSpin 3s ease-in-out infinite;
+  }
+  @keyframes starSpin {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(15deg) scale(1.1); }
+    75% { transform: rotate(-15deg) scale(1.1); }
+  }
+
+  /* ========== 主内容 ========== */
+  .main-content {
+    position: relative;
+    z-index: 1;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 30px 20px 80px;
+  }
+
+  /* ========== 提示语 ========== */
+  .welcome-text {
+    text-align: center;
+    font-size: 20px;
+    color: #5B8C3E;
+    font-weight: bold;
+    margin-bottom: 30px;
+    animation: fadeInUp 0.6s ease-out;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ========== 单元网格 ========== */
+  .unit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+
+  /* ========== 单元卡片 ========== */
+  .unit-card {
+    position: relative;
+    background: white;
+    border-radius: 22px;
+    padding: 24px 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 3px solid transparent;
+    overflow: hidden;
+    animation: cardIn 0.5s ease-out backwards;
+  }
+  .unit-card:nth-child(1)  { animation-delay: 0.05s; }
+  .unit-card:nth-child(2)  { animation-delay: 0.10s; }
+  .unit-card:nth-child(3)  { animation-delay: 0.15s; }
+  .unit-card:nth-child(4)  { animation-delay: 0.20s; }
+  .unit-card:nth-child(5)  { animation-delay: 0.25s; }
+  .unit-card:nth-child(6)  { animation-delay: 0.30s; }
+  .unit-card:nth-child(7)  { animation-delay: 0.35s; }
+  .unit-card:nth-child(8)  { animation-delay: 0.40s; }
+  .unit-card:nth-child(9)  { animation-delay: 0.45s; }
+  .unit-card:nth-child(10) { animation-delay: 0.50s; }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(30px) scale(0.92); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .unit-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 10px 35px rgba(0,0,0,0.15);
+  }
+  .unit-card:active {
+    transform: translateY(-2px) scale(0.98);
+  }
+
+  /* 卡片顶部色条 */
+  .unit-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    border-radius: 22px 22px 0 0;
+  }
+
+  /* 每个单元不同颜色 */
+  .unit-card[data-unit="1"] { border-color: #FFB3BA; }
+  .unit-card[data-unit="1"]::before { background: #FF6B6B; }
+  .unit-card[data-unit="2"] { border-color: #BAFFC9; }
+  .unit-card[data-unit="2"]::before { background: #4ECB71; }
+  .unit-card[data-unit="3"] { border-color: #BAE1FF; }
+  .unit-card[data-unit="3"]::before { background: #5BA8C8; }
+  .unit-card[data-unit="4"] { border-color: #FFFFBA; }
+  .unit-card[data-unit="4"]::before { background: #F0C929; }
+  .unit-card[data-unit="5"] { border-color: #E8BAFF; }
+  .unit-card[data-unit="5"]::before { background: #B46FE0; }
+  .unit-card[data-unit="6"] { border-color: #FFDFBA; }
+  .unit-card[data-unit="6"]::before { background: #FF9F43; }
+  .unit-card[data-unit="7"] { border-color: #C9BAFF; }
+  .unit-card[data-unit="7"]::before { background: #7C5CFC; }
+  .unit-card[data-unit="8"] { border-color: #BAF2FF; }
+  .unit-card[data-unit="8"]::before { background: #2EC4B6; }
+  .unit-card[data-unit="9"] { border-color: #FFB3E0; }
+  .unit-card[data-unit="9"]::before { background: #E84393; }
+  /* 综合复习 */
+  .unit-card[data-unit="review"] { border-color: #FFD700; background: linear-gradient(135deg, #FFFDE7, #FFF8E1); }
+  .unit-card[data-unit="review"]::before { background: linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77, #7EC8E3, #C77DFF); }
+
+  .unit-number {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+    padding: 3px 12px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+  }
+  .unit-card[data-unit="1"]  .unit-number { background: #FF6B6B; }
+  .unit-card[data-unit="2"]  .unit-number { background: #4ECB71; }
+  .unit-card[data-unit="3"]  .unit-number { background: #5BA8C8; }
+  .unit-card[data-unit="4"]  .unit-number { background: #F0C929; }
+  .unit-card[data-unit="5"]  .unit-number { background: #B46FE0; }
+  .unit-card[data-unit="6"]  .unit-number { background: #FF9F43; }
+  .unit-card[data-unit="7"]  .unit-number { background: #7C5CFC; }
+  .unit-card[data-unit="8"]  .unit-number { background: #2EC4B6; }
+  .unit-card[data-unit="9"]  .unit-number { background: #E84393; }
+  .unit-card[data-unit="review"] .unit-number { background: linear-gradient(90deg, #FF6B6B, #FFD93D); }
+
+  .unit-icon {
+    font-size: 36px;
+    margin-bottom: 8px;
+    transition: transform 0.3s;
+    display: block;
+  }
+  .unit-card:hover .unit-icon {
+    transform: scale(1.2) rotate(-8deg);
+  }
+
+  .unit-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .unit-desc {
+    font-size: 13px;
+    color: #888;
+    line-height: 1.6;
+  }
+
+  /* 卡片角标装饰 */
+  .unit-card .corner-deco {
+    position: absolute;
+    bottom: 8px;
+    right: 12px;
+    font-size: 28px;
+    opacity: 0.12;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .unit-card:hover .corner-deco {
+    opacity: 0.25;
+  }
+
+  /* ========== 点击波纹 ========== */
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(126,200,227,0.4);
+    transform: scale(0);
+    animation: rippleAnim 0.6s ease-out;
+    pointer-events: none;
+  }
+  @keyframes rippleAnim {
+    to { transform: scale(4); opacity: 0; }
+  }
+
+  /* ========== Toast ========== */
+  .toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: white;
+    padding: 30px 50px;
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    z-index: 100;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    border: 3px solid var(--blue);
+    transition: transform 0.3s ease;
+  }
+  .toast.show {
+    transform: translate(-50%, -50%) scale(1);
+    animation: toastBounce 0.5s ease;
+  }
+  @keyframes toastBounce {
+    0% { transform: translate(-50%, -50%) scale(0); }
+    50% { transform: translate(-50%, -50%) scale(1.08); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+  }
+  .toast-emoji { font-size: 44px; display: block; margin-bottom: 10px; }
+
+  /* ========== 粒子 ========== */
+  .particle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 99;
+    font-size: 22px;
+    animation: particleFly 1s ease-out forwards;
+  }
+  @keyframes particleFly {
+    0% { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-80px) scale(0.3); }
+  }
+</style>
+</head>
+<body>
+
+<!-- 天空装饰 -->
+<div class="sun"></div>
+<div class="cloud cloud-1"></div>
+<div class="cloud cloud-2"></div>
+
+<!-- 顶部导航 -->
+<div class="top-bar">
+  <a class="back-btn" href="index.html">
+    ← 返回首页
+  </a>
+  <div class="page-title">🔢 数学乐园</div>
+  <div class="star-bar">
+    <span class="star-icon">⭐</span>
+    <span id="starCount">0</span> 颗星星
+  </div>
+</div>
+
+<!-- 主内容 -->
+<div class="main-content">
+  <div class="welcome-text">🌻 想复习哪个单元呢？点击卡片开始吧！</div>
+
+  <div class="unit-grid">
+
+    <!-- 第一单元 -->
+    <div class="unit-card" data-unit="1" onclick="selectUnit(1, event)">
+      <span class="unit-number">第一单元</span>
+      <span class="unit-icon">🧮</span>
+      <div class="unit-name">四则运算</div>
+      <div class="unit-desc">加减乘除的意义、0的特性、含括号的运算顺序</div>
+      <span class="corner-deco">➕</span>
+    </div>
+
+    <!-- 第二单元 -->
+    <div class="unit-card" data-unit="2" onclick="selectUnit(2, event)">
+      <span class="unit-number">第二单元</span>
+      <span class="unit-icon">👀</span>
+      <div class="unit-name">观察物体（二）</div>
+      <div class="unit-desc">从不同方向观察物体、辨认平面图形</div>
+      <span class="corner-deco">🔲</span>
+    </div>
+
+    <!-- 第三单元 -->
+    <div class="unit-card" data-unit="3" onclick="selectUnit(3, event)">
+      <span class="unit-number">第三单元</span>
+      <span class="unit-icon">📏</span>
+      <div class="unit-name">运算定律</div>
+      <div class="unit-desc">加法交换律·结合律、乘法分配律、简便计算</div>
+      <span class="corner-deco">✖️</span>
+    </div>
+
+    <!-- 第四单元 -->
+    <div class="unit-card" data-unit="4" onclick="selectUnit(4, event)">
+      <span class="unit-number">第四单元</span>
+      <span class="unit-icon">🔢</span>
+      <div class="unit-name">小数的意义和性质</div>
+      <div class="unit-desc">小数读写、比较大小、小数点移动、单位换算</div>
+      <span class="corner-deco">🎯</span>
+    </div>
+
+    <!-- 第五单元 -->
+    <div class="unit-card" data-unit="5" onclick="selectUnit(5, event)">
+      <span class="unit-number">第五单元</span>
+      <span class="unit-icon">📐</span>
+      <div class="unit-name">三角形</div>
+      <div class="unit-desc">三角形的分类、内角和、三边关系</div>
+      <span class="corner-deco">🔺</span>
+    </div>
+
+    <!-- 第六单元 -->
+    <div class="unit-card" data-unit="6" onclick="selectUnit(6, event)">
+      <span class="unit-number">第六单元</span>
+      <span class="unit-icon">➕</span>
+      <div class="unit-name">小数的加法和减法</div>
+      <div class="unit-desc">小数加减法竖式计算、混合运算</div>
+      <span class="corner-deco">📝</span>
+    </div>
+
+    <!-- 第七单元 -->
+    <div class="unit-card" data-unit="7" onclick="selectUnit(7, event)">
+      <span class="unit-number">第七单元</span>
+      <span class="unit-icon">✨</span>
+      <div class="unit-name">图形的运动（二）</div>
+      <div class="unit-desc">轴对称图形、图形的平移</div>
+      <span class="corner-deco">🦋</span>
+    </div>
+
+    <!-- 第八单元 -->
+    <div class="unit-card" data-unit="8" onclick="selectUnit(8, event)">
+      <span class="unit-number">第八单元</span>
+      <span class="unit-icon">📊</span>
+      <div class="unit-name">平均数与条形统计图</div>
+      <div class="unit-desc">求平均数、复式条形统计图</div>
+      <span class="corner-deco">📈</span>
+    </div>
+
+    <!-- 第九单元 -->
+    <div class="unit-card" data-unit="9" onclick="selectUnit(9, event)">
+      <span class="unit-number">第九单元</span>
+      <span class="unit-icon">🐔</span>
+      <div class="unit-name">数学广角——鸡兔同笼</div>
+      <div class="unit-desc">经典鸡兔同笼问题、假设法解题</div>
+      <span class="corner-deco">🐰</span>
+    </div>
+
+    <!-- 综合复习 -->
+    <div class="unit-card" data-unit="review" onclick="selectUnit('review', event)">
+      <span class="unit-number">🌟 综合复习</span>
+      <span class="unit-icon">🏆</span>
+      <div class="unit-name">综合大闯关</div>
+      <div class="unit-desc">所有单元混合出题，看看你能闯到第几关！</div>
+      <span class="corner-deco">🎯</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span class="toast-emoji" id="toastEmoji"></span>
+  <span id="toastText"></span>
+</div>
+
+<script>
+  // ========== 星星积分（与首页共享 localStorage） ==========
+  let totalStars = parseInt(localStorage.getItem('totalStars') || '0');
+  document.getElementById('starCount').textContent = totalStars;
+
+  // ========== 波纹效果 ==========
+  function createRipple(event, element) {
+    const ripple = document.createElement('div');
+    ripple.className = 'ripple';
+    const rect = element.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    ripple.style.width = ripple.style.height = size + 'px';
+    ripple.style.left = (event.clientX - rect.left - size / 2) + 'px';
+    ripple.style.top = (event.clientY - rect.top - size / 2) + 'px';
+    element.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
+  }
+
+  // ========== 粒子效果 ==========
+  function spawnParticles(x, y, emojis) {
+    for (let i = 0; i < 8; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      p.style.left = (x + (Math.random() - 0.5) * 100) + 'px';
+      p.style.top = (y + (Math.random() - 0.5) * 40) + 'px';
+      p.style.animationDelay = (Math.random() * 0.3) + 's';
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 1500);
+    }
+  }
+
+  // ========== Toast ==========
+  function showToast(emoji, text, duration = 2000) {
+    const toast = document.getElementById('toast');
+    document.getElementById('toastEmoji').textContent = emoji;
+    document.getElementById('toastText').textContent = text;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), duration);
+  }
+
+  // ========== 选择单元 ==========
+  const unitInfo = {
+    1: { icon: '🧮', name: '四则运算' },
+    2: { icon: '👀', name: '观察物体（二）' },
+    3: { icon: '📏', name: '运算定律' },
+    4: { icon: '🔢', name: '小数的意义和性质' },
+    5: { icon: '📐', name: '三角形' },
+    6: { icon: '➕', name: '小数的加法和减法' },
+    7: { icon: '✨', name: '图形的运动（二）' },
+    8: { icon: '📊', name: '平均数与条形统计图' },
+    9: { icon: '🐔', name: '鸡兔同笼' },
+    review: { icon: '🏆', name: '综合大闯关' }
+  };
+
+  function selectUnit(unit, event) {
+    createRipple(event, event.currentTarget);
+    const info = unitInfo[unit];
+    spawnParticles(event.clientX, event.clientY, ['⭐', '✨', '💫', '🌟']);
+
+    const unitKey = (unit === 'review') ? 'review' : unit;
+    // 跳转到对应的练习页面（目前先弹出提示）
+    showToast(info.icon, '「' + info.name + '」\n练习模块开发中，敬请期待！🚀', 2000);
+  }
+</script>
+</body>
+</html>
