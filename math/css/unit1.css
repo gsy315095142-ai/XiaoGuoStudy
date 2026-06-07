@@ -97,9 +97,6 @@
   flex-shrink: 0;
 }
 .hud-item { display: flex; align-items: center; gap: 4px; }
-.hud-hp { font-size: 18px; }
-.hud-hp .hp-heart { transition: all 0.3s; display: inline-block; }
-.hud-hp .hp-heart.lost { opacity: 0.2; transform: scale(0.7); }
 .hud-wave { color: var(--purple); }
 .hud-score { color: var(--orange); }
 .hud-combo {
@@ -123,44 +120,36 @@
   min-height: 200px;
 }
 
-/* ========== 城堡 ========== */
+/* ========== 城堡区域 ========== */
 .castle {
   text-align: center;
-  padding: 8px 0 4px;
+  padding: 6px 0 2px;
   z-index: 5;
   flex-shrink: 0;
   background: linear-gradient(0deg, rgba(107,203,119,0.35) 0%, rgba(107,203,119,0.1) 60%, transparent 100%);
 }
-.castle-body {
-  font-size: 72px;
-  line-height: 1;
-  transition: transform 0.3s;
+
+/* 城堡上方的红心 */
+.castle-hp {
+  font-size: 22px;
+  margin-bottom: 2px;
 }
-.castle.shake .castle-body {
-  animation: castleShake 0.4s ease;
+.castle-hp .hp-heart {
+  transition: all 0.3s;
+  display: inline-block;
 }
-@keyframes castleShake {
-  0%, 100% { transform: translateX(0); }
-  20% { transform: translateX(-8px) rotate(-2deg); }
-  40% { transform: translateX(8px) rotate(2deg); }
-  60% { transform: translateX(-5px) rotate(-1deg); }
-  80% { transform: translateX(5px) rotate(1deg); }
-}
-.castle.celebrate .castle-body {
-  animation: castleCelebrate 0.5s ease 3;
-}
-@keyframes castleCelebrate {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.2); }
+.castle-hp .hp-heart.lost {
+  opacity: 0.2;
+  transform: scale(0.7);
 }
 
-/* 城堡血条（粗条） */
+/* 城堡血条（粗条，在红心和城堡之间） */
 .castle-hp-bar {
-  width: 220px;
+  width: 240px;
   height: 18px;
   background: rgba(0,0,0,0.2);
   border-radius: 9px;
-  margin: 6px auto 0;
+  margin: 0 auto 4px;
   overflow: hidden;
   border: 2px solid rgba(0,0,0,0.15);
 }
@@ -187,6 +176,30 @@
 @keyframes hpPulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
+}
+
+/* 城堡本体 */
+.castle-body {
+  font-size: 72px;
+  line-height: 1;
+  transition: transform 0.3s;
+}
+.castle.shake .castle-body {
+  animation: castleShake 0.4s ease;
+}
+@keyframes castleShake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px) rotate(-2deg); }
+  40% { transform: translateX(8px) rotate(2deg); }
+  60% { transform: translateX(-5px) rotate(-1deg); }
+  80% { transform: translateX(5px) rotate(1deg); }
+}
+.castle.celebrate .castle-body {
+  animation: castleCelebrate 0.5s ease 3;
+}
+@keyframes castleCelebrate {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
 }
 
 /* ========== 题目区域（城堡下方） ========== */
@@ -264,7 +277,7 @@
   filter: drop-shadow(3px 5px 8px rgba(0,0,0,0.25));
 }
 
-/* 怪物身上的文字 — 深色背景白底字，高对比度 */
+/* 怪物身上的文字 — 白底深色字，高对比度 */
 .enemy-text {
   position: absolute;
   top: 22%;

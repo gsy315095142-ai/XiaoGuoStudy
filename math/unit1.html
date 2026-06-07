@@ -54,9 +54,6 @@
 
   <!-- 1. HUD信息栏 -->
   <div class="game-hud">
-    <div class="hud-item hud-hp">
-      <span id="hpHearts">❤️❤️❤️❤️❤️</span>
-    </div>
     <div class="hud-item hud-wave">🌊 第 <span id="waveDisplay">0</span> 波</div>
     <div class="hud-item hud-score">🏆 <span id="scoreDisplay">0</span></div>
     <div class="hud-item hud-combo" id="comboDisplay"></div>
@@ -66,12 +63,15 @@
   <!-- 2. 战场区域（怪物从上往下掉） -->
   <div class="battlefield" id="battlefield"></div>
 
-  <!-- 3. 城堡（大！） -->
+  <!-- 3. 血量显示 + 城堡 -->
   <div class="castle" id="castle">
-    <div class="castle-body">🏰</div>
+    <div class="castle-hp">
+      <span id="hpHearts">❤️❤️❤️❤️❤️</span>
+    </div>
     <div class="castle-hp-bar">
       <div class="castle-hp-fill" id="hpBar"></div>
     </div>
+    <div class="castle-body">🏰</div>
   </div>
 
   <!-- 4. 题目区域（城堡下方） -->

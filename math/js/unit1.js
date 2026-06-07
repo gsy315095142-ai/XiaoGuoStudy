@@ -18,10 +18,13 @@ document.querySelectorAll('.diff-btn').forEach(function(btn) {
 });
 
 // ========== 游戏参数（按难度） ==========
+// baseFallDuration: 怪物初始下落时间（秒）— 越大越慢
+// minFallDuration: 加速下限 — 再快也不低于这个值
+// speedUpPerWave: 每波加速量（秒）
 var GAME_CONFIG = {
-  1: { hp: 5, time: 90, baseFallDuration: 8,  minFallDuration: 5,  label: '简单' },
-  2: { hp: 4, time: 75, baseFallDuration: 6.5, minFallDuration: 3.5, label: '中等' },
-  3: { hp: 3, time: 60, baseFallDuration: 5,   minFallDuration: 2.5, label: '困难' }
+  1: { hp: 5, time: 90, baseFallDuration: 15, minFallDuration: 8,  speedUpPerWave: 0.3, label: '简单' },
+  2: { hp: 4, time: 75, baseFallDuration: 12, minFallDuration: 6,  speedUpPerWave: 0.3, label: '中等' },
+  3: { hp: 3, time: 60, baseFallDuration: 10, minFallDuration: 5,  speedUpPerWave: 0.3, label: '困难' }
 };
 
 // ========== 游戏状态 ==========
@@ -50,26 +53,20 @@ var monsterColors = [
 
 // ========== 怪物 SVG 模板（有身体有手脚的小怪物） ==========
 function monsterSVG(color) {
-  // 随机选一种怪物表情
   var expressions = [
-    // 坏笑
     '<path d="M 32 52 Q 50 46 68 52" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>' +
     '<rect x="34" y="52" width="32" height="8" rx="2" fill="#333"/>' +
     '<rect x="34" y="52" width="32" height="4" rx="2" fill="white"/>',
-    // 愤怒
     '<line x1="30" y1="56" x2="70" y2="56" stroke="#333" stroke-width="3" stroke-linecap="round"/>' +
     '<path d="M 38 44 L 44 50" stroke="#333" stroke-width="2.5" stroke-linecap="round"/>' +
     '<path d="M 62 44 L 56 50" stroke="#333" stroke-width="2.5" stroke-linecap="round"/>',
-    // 大嘴
     '<ellipse cx="50" cy="54" rx="16" ry="10" fill="#333"/>' +
     '<ellipse cx="50" cy="50" rx="14" ry="6" fill="white"/>',
-    // 吐舌头
     '<path d="M 32 52 Q 50 64 68 52" stroke="#333" stroke-width="3" fill="#333"/>' +
     '<ellipse cx="50" cy="60" rx="6" ry="8" fill="#E74C3C"/>'
   ];
   var expr = expressions[Math.floor(Math.random() * expressions.length)];
 
-  // 随机角/耳朵
   var horns = [
     '<polygon points="28,18 22,2 36,14" fill="' + color + '" stroke="#333" stroke-width="1.5"/>' +
     '<polygon points="72,18 78,2 64,14" fill="' + color + '" stroke="#333" stroke-width="1.5"/>',
@@ -81,27 +78,18 @@ function monsterSVG(color) {
   var horn = horns[Math.floor(Math.random() * horns.length)];
 
   return '<svg viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg">' +
-    // 身体
     '<ellipse cx="50" cy="52" rx="38" ry="38" fill="' + color + '" stroke="#333" stroke-width="2.5"/>' +
-    // 肚皮
     '<ellipse cx="50" cy="60" rx="22" ry="20" fill="rgba(255,255,255,0.2)"/>' +
-    // 角/耳朵
     horn +
-    // 眼白
     '<ellipse cx="38" cy="40" rx="11" ry="12" fill="white" stroke="#333" stroke-width="1.5"/>' +
     '<ellipse cx="62" cy="40" rx="11" ry="12" fill="white" stroke="#333" stroke-width="1.5"/>' +
-    // 眼珠（看下面，像在俯冲）
     '<circle cx="38" cy="44" r="5.5" fill="#333"/>' +
     '<circle cx="62" cy="44" r="5.5" fill="#333"/>' +
-    // 高光
     '<circle cx="40" cy="41" r="2" fill="white"/>' +
     '<circle cx="64" cy="41" r="2" fill="white"/>' +
-    // 表情
     expr +
-    // 小手
     '<ellipse cx="14" cy="58" rx="8" ry="6" fill="' + color + '" stroke="#333" stroke-width="1.5" transform="rotate(-20, 14, 58)"/>' +
     '<ellipse cx="86" cy="58" rx="8" ry="6" fill="' + color + '" stroke="#333" stroke-width="1.5" transform="rotate(20, 86, 58)"/>' +
-    // 小脚
     '<ellipse cx="36" cy="92" rx="10" ry="6" fill="' + color + '" stroke="#333" stroke-width="1.5"/>' +
     '<ellipse cx="64" cy="92" rx="10" ry="6" fill="' + color + '" stroke="#333" stroke-width="1.5"/>' +
     '</svg>';
@@ -270,7 +258,7 @@ function startTimer() {
     document.getElementById('timerDisplay').textContent = timeLeft;
     if (timeLeft <= 10) document.querySelector('.hud-timer').classList.add('warning');
     if (timeLeft <= 0) {
-      endGame(true); // 时间到，还有血 = 胜利
+      endGame(true);
     }
   }, 1000);
 }
@@ -328,7 +316,7 @@ function nextWave() {
 }
 
 function getFallDuration() {
-  var dur = config.baseFallDuration - (waveCount - 1) * 0.3;
+  var dur = config.baseFallDuration - (waveCount - 1) * config.speedUpPerWave;
   return Math.max(config.minFallDuration, dur);
 }
 
