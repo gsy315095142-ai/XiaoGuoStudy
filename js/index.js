@@ -30,13 +30,27 @@ var subjectInfo = {
   english: { emoji: '🔤', name: '英语', particles: ['🔤', '💬', '🌈', '⭐'] }
 };
 
+// 学科跳转路径映射
+var subjectPages = {
+  chinese: 'chinese/index.html',
+  math:    'math/index.html',
+  english: 'english/index.html'
+};
+
 function selectSubject(subject, event) {
   createRipple(event, event.currentTarget);
   var info = subjectInfo[subject];
   spawnParticles(event.clientX, event.clientY, info.particles);
 
-  if (subject === 'math') {
-    setTimeout(function() { window.location.href = 'math.html'; }, 400);
+  var page = subjectPages[subject];
+  if (page) {
+    // 检查页面是否存在：数学已开发，其他暂未
+    var developed = ['math'];
+    if (developed.indexOf(subject) !== -1) {
+      setTimeout(function() { window.location.href = page; }, 400);
+    } else {
+      showToast(info.emoji, info.name + ' 学习模块开发中...\n敬请期待！🚀', 2000);
+    }
   } else {
     showToast(info.emoji, info.name + ' 学习模块开发中...\n敬请期待！🚀', 2000);
   }
