@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎈 气球大作战 - 四则运算</title>
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/math.css">
+<link rel="stylesheet" href="css/unit1.css">
+</head>
+<body>
+
+<!-- 天空装饰 -->
+<div class="sun"></div>
+<div class="cloud cloud-1"></div>
+<div class="cloud cloud-2"></div>
+
+<!-- 顶部导航栏 -->
+<div class="top-bar">
+  <a class="back-btn" href="math.html">← 返回目录</a>
+  <div class="page-title">🎈 气球大作战</div>
+  <div class="star-bar">
+    <span class="star-icon">⭐</span>
+    <span id="starCount">0</span> 颗星星
+  </div>
+</div>
+
+<!-- ========== 开始画面 ========== -->
+<div class="game-screen" id="startScreen">
+  <div class="start-content">
+    <div class="game-logo">🎈</div>
+    <div class="game-title">气球大作战</div>
+    <div class="game-subtitle">第一单元 · 四则运算</div>
+    <div class="game-rules">
+      <p>🎯 看清题目，点击正确答案的气球来打爆它！</p>
+      <p>⏱️ 每局 60 秒，答对得 ⭐，答错扣时间</p>
+      <p>💨 气球会飘走哦，要快点下手！</p>
+    </div>
+    <div class="difficulty-select">
+      <div class="diff-label">选择难度：</div>
+      <div class="diff-buttons">
+        <button class="diff-btn active" data-diff="1">⭐ 简单</button>
+        <button class="diff-btn" data-diff="2">⭐⭐ 中等</button>
+        <button class="diff-btn" data-diff="3">⭐⭐⭐ 困难</button>
+      </div>
+    </div>
+    <button class="start-btn" onclick="startGame()">🚀 开始挑战！</button>
+  </div>
+</div>
+
+<!-- ========== 游戏画面 ========== -->
+<div class="game-screen hidden" id="gameScreen">
+  <!-- HUD -->
+  <div class="game-hud">
+    <div class="hud-item hud-score">🏆 <span id="scoreDisplay">0</span> 分</div>
+    <div class="hud-item hud-combo" id="comboDisplay"></div>
+    <div class="hud-item hud-timer">⏱️ <span id="timerDisplay">60</span>s</div>
+  </div>
+
+  <!-- 题目区 -->
+  <div class="question-area" id="questionArea">
+    <div class="question-text" id="questionText"></div>
+    <div class="question-hint" id="questionHint"></div>
+  </div>
+
+  <!-- 气球区域 -->
+  <div class="balloon-field" id="balloonField"></div>
+</div>
+
+<!-- ========== 结算画面 ========== -->
+<div class="game-screen hidden" id="resultScreen">
+  <div class="result-content">
+    <div class="result-emoji" id="resultEmoji">🎉</div>
+    <div class="result-title" id="resultTitle">太棒了！</div>
+    <div class="result-stats">
+      <div class="stat-row">
+        <span class="stat-label">得分</span>
+        <span class="stat-value" id="resultScore">0</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">正确</span>
+        <span class="stat-value" id="resultCorrect">0</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">错误</span>
+        <span class="stat-value" id="resultWrong">0</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">正确率</span>
+        <span class="stat-value" id="resultRate">0%</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">获得星星</span>
+        <span class="stat-value star-value" id="resultStars">⭐ 0</span>
+      </div>
+    </div>
+    <div class="result-buttons">
+      <button class="replay-btn" onclick="restartGame()">🔄 再来一局</button>
+      <a class="back-btn-result" href="math.html">🏠 返回目录</a>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span class="toast-emoji" id="toastEmoji"></span>
+  <span id="toastText"></span>
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/unit1.js"></script>
+</body>
+</html>
