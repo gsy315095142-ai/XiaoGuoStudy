@@ -1,0 +1,231 @@
+/* ========== 数学单元目录页专用样式 ========== */
+
+/* 太阳缩小 */
+.sun {
+  top: 18px;
+  right: 50px;
+  width: 65px;
+  height: 65px;
+}
+
+/* 顶部导航栏 */
+.top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 30px;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+}
+/* 导航栏内的星星栏覆盖公共定位，改为行内 */
+.top-bar .star-bar {
+  position: static;
+  font-size: 17px;
+  backdrop-filter: none;
+  box-shadow: none;
+  background: none;
+  padding: 0;
+}
+.top-bar .star-bar .star-icon {
+  font-size: 22px;
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--blue-dark);
+  cursor: pointer;
+  padding: 8px 18px;
+  border-radius: 20px;
+  background: var(--blue-light);
+  border: 2px solid var(--blue);
+  transition: all 0.25s;
+  text-decoration: none;
+}
+.back-btn:hover {
+  background: var(--blue);
+  color: white;
+  transform: translateX(-4px);
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--blue-dark);
+  text-shadow: 1px 1px 0 rgba(255,255,255,0.8);
+}
+
+/* 主内容区 */
+.main-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 30px 20px 80px;
+}
+
+/* 提示语 */
+.welcome-text {
+  text-align: center;
+  font-size: 20px;
+  color: #5B8C3E;
+  font-weight: bold;
+  margin-bottom: 30px;
+  animation: fadeInUp 0.6s ease-out;
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 单元网格 */
+.unit-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+/* 单元卡片 */
+.unit-card {
+  position: relative;
+  background: white;
+  border-radius: 22px;
+  padding: 24px 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 3px solid transparent;
+  overflow: hidden;
+  animation: cardIn 0.5s ease-out backwards;
+}
+.unit-card:nth-child(1)  { animation-delay: 0.05s; }
+.unit-card:nth-child(2)  { animation-delay: 0.10s; }
+.unit-card:nth-child(3)  { animation-delay: 0.15s; }
+.unit-card:nth-child(4)  { animation-delay: 0.20s; }
+.unit-card:nth-child(5)  { animation-delay: 0.25s; }
+.unit-card:nth-child(6)  { animation-delay: 0.30s; }
+.unit-card:nth-child(7)  { animation-delay: 0.35s; }
+.unit-card:nth-child(8)  { animation-delay: 0.40s; }
+.unit-card:nth-child(9)  { animation-delay: 0.45s; }
+.unit-card:nth-child(10) { animation-delay: 0.50s; }
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(30px) scale(0.92); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.unit-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 10px 35px rgba(0,0,0,0.15);
+}
+.unit-card:active {
+  transform: translateY(-2px) scale(0.98);
+}
+
+/* 卡片顶部色条 */
+.unit-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 6px;
+  border-radius: 22px 22px 0 0;
+}
+
+/* 每个单元不同颜色 */
+.unit-card[data-unit="1"] { border-color: #FFB3BA; }
+.unit-card[data-unit="1"]::before { background: #FF6B6B; }
+.unit-card[data-unit="2"] { border-color: #BAFFC9; }
+.unit-card[data-unit="2"]::before { background: #4ECB71; }
+.unit-card[data-unit="3"] { border-color: #BAE1FF; }
+.unit-card[data-unit="3"]::before { background: #5BA8C8; }
+.unit-card[data-unit="4"] { border-color: #FFFFBA; }
+.unit-card[data-unit="4"]::before { background: #F0C929; }
+.unit-card[data-unit="5"] { border-color: #E8BAFF; }
+.unit-card[data-unit="5"]::before { background: #B46FE0; }
+.unit-card[data-unit="6"] { border-color: #FFDFBA; }
+.unit-card[data-unit="6"]::before { background: #FF9F43; }
+.unit-card[data-unit="7"] { border-color: #C9BAFF; }
+.unit-card[data-unit="7"]::before { background: #7C5CFC; }
+.unit-card[data-unit="8"] { border-color: #BAF2FF; }
+.unit-card[data-unit="8"]::before { background: #2EC4B6; }
+.unit-card[data-unit="9"] { border-color: #FFB3E0; }
+.unit-card[data-unit="9"]::before { background: #E84393; }
+.unit-card[data-unit="review"] { border-color: #FFD700; background: linear-gradient(135deg, #FFFDE7, #FFF8E1); }
+.unit-card[data-unit="review"]::before { background: linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77, #7EC8E3, #C77DFF); }
+
+.unit-number {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: bold;
+  color: white;
+  padding: 3px 12px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+.unit-card[data-unit="1"]  .unit-number { background: #FF6B6B; }
+.unit-card[data-unit="2"]  .unit-number { background: #4ECB71; }
+.unit-card[data-unit="3"]  .unit-number { background: #5BA8C8; }
+.unit-card[data-unit="4"]  .unit-number { background: #F0C929; }
+.unit-card[data-unit="5"]  .unit-number { background: #B46FE0; }
+.unit-card[data-unit="6"]  .unit-number { background: #FF9F43; }
+.unit-card[data-unit="7"]  .unit-number { background: #7C5CFC; }
+.unit-card[data-unit="8"]  .unit-number { background: #2EC4B6; }
+.unit-card[data-unit="9"]  .unit-number { background: #E84393; }
+.unit-card[data-unit="review"] .unit-number { background: linear-gradient(90deg, #FF6B6B, #FFD93D); }
+
+.unit-icon {
+  font-size: 36px;
+  margin-bottom: 8px;
+  transition: transform 0.3s;
+  display: block;
+}
+.unit-card:hover .unit-icon {
+  transform: scale(1.2) rotate(-8deg);
+}
+
+.unit-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.unit-desc {
+  font-size: 13px;
+  color: #888;
+  line-height: 1.6;
+}
+
+/* 卡片角标装饰 */
+.unit-card .corner-deco {
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  font-size: 28px;
+  opacity: 0.12;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.unit-card:hover .corner-deco {
+  opacity: 0.25;
+}
+
+/* 数学页波纹颜色覆盖 */
+.ripple {
+  background: rgba(126,200,227,0.4);
+}
+
+/* 数学页 Toast 边框色 */
+.toast {
+  border-color: var(--blue);
+  font-size: 22px;
+}
+.toast-emoji {
+  font-size: 44px;
+}
