@@ -8,7 +8,7 @@ var unitInfo = {
   2: { icon: '👀', name: '观察物体（二）', page: 'unit2.html' },
   3: { icon: '🫧', name: '运算定律', page: 'unit3.html' },
   4: { icon: '🧪', name: '小数的意义和性质', page: 'unit4.html' },
-  5: { icon: '📐', name: '三角形' },
+  5: { icon: '📐', name: '三角形', page: 'unit5.html' },
   6: { icon: '➕', name: '小数的加法和减法' },
   7: { icon: '✨', name: '图形的运动（二）' },
   8: { icon: '📊', name: '平均数与条形统计图' },

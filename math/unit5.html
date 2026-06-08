@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏗️ 三角建造师 - 三角形</title>
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="css/math.css">
+<link rel="stylesheet" href="css/unit5.css">
+</head>
+<body>
+
+<!-- 工具飘落装饰 -->
+<div class="tool-float tf-1">🔧</div>
+<div class="tool-float tf-2">🔨</div>
+<div class="tool-float tf-3">📐</div>
+<div class="tool-float tf-4">📏</div>
+
+<!-- 顶部导航栏 -->
+<div class="top-bar">
+  <a class="back-btn" href="index.html">← 数学乐园</a>
+  <div class="page-title">🏗️ 三角建造师</div>
+  <div class="star-bar">
+    <span class="star-icon">⭐</span>
+    <span id="starCount">0</span>
+  </div>
+</div>
+
+<!-- ========== 开始画面 ========== -->
+<div class="game-screen" id="startScreen">
+  <div class="start-content">
+    <div class="game-logo">🏗️</div>
+    <div class="game-title">三角建造师</div>
+    <div class="game-subtitle">第五单元 · 三角形<br>用三角形的魔法，建造坚固的桥梁！</div>
+
+    <div class="chapter-grid">
+      <div class="chapter-card" onclick="selectChapter(1, event)">
+        <div class="chapter-icon">🪵</div>
+        <div class="chapter-info">
+          <div class="chapter-name">第一章：材料检验</div>
+          <div class="chapter-desc">三边关系 · 从仓库选3根木棍搭三角形！</div>
+        </div>
+        <div class="chapter-stars">⭐</div>
+      </div>
+      <div class="chapter-card" onclick="selectChapter(2, event)">
+        <div class="chapter-icon">🔍</div>
+        <div class="chapter-info">
+          <div class="chapter-name">第二章：三角鉴定所</div>
+          <div class="chapter-desc">三角形分类 · 按角分类、按边分类</div>
+        </div>
+        <div class="chapter-stars">⭐⭐</div>
+      </div>
+      <div class="chapter-card" onclick="selectChapter(3, event)">
+        <div class="chapter-icon">📐</div>
+        <div class="chapter-info">
+          <div class="chapter-name">第三章：角度拼图</div>
+          <div class="chapter-desc">内角和 180° · 算出第三个角，拼成直线！</div>
+        </div>
+        <div class="chapter-stars">⭐⭐⭐</div>
+      </div>
+      <div class="chapter-card" onclick="selectChapter(4, event)">
+        <div class="chapter-icon">🌉</div>
+        <div class="chapter-info">
+          <div class="chapter-name">第四章：造桥大师</div>
+          <div class="chapter-desc">综合挑战 · 三边关系 + 分类 + 内角和</div>
+        </div>
+        <div class="chapter-stars">⭐⭐⭐</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 游戏画面 ========== -->
+<div class="game-screen hidden" id="gameScreen">
+  <!-- HUD -->
+  <div class="hud">
+    <div class="hud-item" id="heartsDisplay">❤️❤️❤️</div>
+    <div class="hud-item">🎯 <span id="scoreDisplay">0</span></div>
+    <div class="hud-item" id="comboDisplay"></div>
+  </div>
+
+  <!-- 进度条 -->
+  <div class="progress-bar-wrap">
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="progress-text" id="progressText">1/5</div>
+  </div>
+
+  <!-- 关卡信息 -->
+  <div class="level-info" id="levelInfo">第 1 关</div>
+  <div class="question-text" id="questionText"></div>
+
+  <!-- ============ 模式1：材料检验（选木棍搭三角形） ============ -->
+  <div class="mode-area hidden" id="mode1">
+    <div class="wood-shelf" id="woodShelf"></div>
+    <div class="build-stage" id="buildStage">
+      <div class="build-slots" id="buildSlots">
+        <div class="build-slot empty" data-slot="0" onclick="removeWood(0)">
+          <span class="slot-label">第1根</span>
+          <span class="slot-value">?</span>
+        </div>
+        <div class="build-slot empty" data-slot="1" onclick="removeWood(1)">
+          <span class="slot-label">第2根</span>
+          <span class="slot-value">?</span>
+        </div>
+        <div class="build-slot empty" data-slot="2" onclick="removeWood(2)">
+          <span class="slot-label">第3根</span>
+          <span class="slot-value">?</span>
+        </div>
+      </div>
+      <div class="build-actions">
+        <button class="build-btn btn-clear" onclick="clearBuild()">🗑️ 清空</button>
+        <button class="build-btn btn-build" id="buildBtn" onclick="tryBuild()" disabled>🔨 搭一搭！</button>
+      </div>
+    </div>
+
+    <!-- 拼接动画区域 -->
+    <div class="assemble-stage hidden" id="assembleStage">
+      <svg class="assemble-svg" id="assembleSvg" viewBox="0 0 320 200"></svg>
+      <div class="assemble-result" id="assembleResult"></div>
+    </div>
+
+    <div class="action-hint" id="mode1Hint">🪵 从仓库里选3根木棍，搭出三角形！</div>
+  </div>
+
+  <!-- ============ 模式2：三角鉴定所（分类） ============ -->
+  <div class="mode-area hidden" id="mode2">
+    <div class="tri-display" id="triDisplay">
+      <svg class="tri-svg" id="triSvg" viewBox="0 0 300 260"></svg>
+      <div class="tri-info" id="triInfo"></div>
+    </div>
+    <div class="classify-btns" id="classifyBtns"></div>
+    <div class="action-hint">🔍 看清楚这个三角形，选正确的分类！</div>
+  </div>
+
+  <!-- ============ 模式3：角度拼图（算第三个角） ============ -->
+  <div class="mode-area hidden" id="mode3">
+    <div class="angle-stage">
+      <svg class="angle-svg" id="angleSvg" viewBox="0 0 300 260"></svg>
+    </div>
+    <div class="angle-info" id="angleInfo"></div>
+    <div class="angle-choices" id="angleChoices"></div>
+    <div class="angle-proof hidden" id="angleProof">
+      <div class="proof-title">✨ 三个角拼成一条直线 = 180°！</div>
+      <svg class="proof-svg" id="proofSvg" viewBox="0 0 320 120"></svg>
+    </div>
+    <div class="action-hint">📐 已知两个角，算出第三个角！三角形内角和 = 180°</div>
+  </div>
+
+  <!-- ============ 模式4：造桥大师（综合） ============ -->
+  <div class="mode-area hidden" id="mode4">
+    <div class="bridge-question" id="bridgeQuestion"></div>
+    <div class="bridge-choices" id="bridgeChoices"></div>
+    <div class="action-hint">🌉 综合运用三角形知识，完成造桥任务！</div>
+  </div>
+</div>
+
+<!-- ========== 结果画面 ========== -->
+<div class="game-screen hidden" id="resultScreen">
+  <div class="result-content">
+    <div class="result-emoji" id="resultEmoji">🎉</div>
+    <div class="result-title" id="resultTitle">闯关成功！</div>
+    <div id="resultStats"></div>
+    <div class="result-btns">
+      <button class="result-btn btn-retry" onclick="restartGame()">🔄 再来一次</button>
+      <a class="result-btn btn-back" href="index.html">🏠 返回数学乐园</a>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span class="toast-emoji" id="toastEmoji"></span>
+  <span id="toastText"></span>
+</div>
+
+<script src="../js/common.js"></script>
+<script src="js/unit5.js"></script>
+</body>
+</html>
