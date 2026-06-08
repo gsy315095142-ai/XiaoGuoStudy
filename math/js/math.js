@@ -9,7 +9,7 @@ var unitInfo = {
   3: { icon: '🫧', name: '运算定律', page: 'unit3.html' },
   4: { icon: '🧪', name: '小数的意义和性质', page: 'unit4.html' },
   5: { icon: '📐', name: '三角形', page: 'unit5.html' },
-  6: { icon: '➕', name: '小数的加法和减法' },
+  6: { icon: '🏪', name: '小数的加法和减法', page: 'unit6.html' },
   7: { icon: '✨', name: '图形的运动（二）' },
   8: { icon: '📊', name: '平均数与条形统计图' },
   9: { icon: '🐔', name: '鸡兔同笼' },
@@ -22,12 +22,10 @@ function selectUnit(unit, event) {
   if (!info) return;
 
   if (info.page) {
-    // 有页面的单元，跳转
     setTimeout(function() { window.location.href = info.page; }, 400);
   } else {
     showToast(info.icon, '「' + info.name + '」\n练习模块开发中，敬请期待！🚀', 2000);
   }
 }
 
-// 初始化星星
 initStars();

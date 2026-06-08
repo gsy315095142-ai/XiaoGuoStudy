@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏪 小数便利店 - 小数的加法和减法</title>
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="css/math.css">
+<link rel="stylesheet" href="css/unit6.css">
+</head>
+<body>
+
+<!-- 背景装饰：飘落的硬币和商品 -->
+<div class="coin-float cf-1">🪙</div>
+<div class="coin-float cf-2">🍫</div>
+<div class="coin-float cf-3">🪙</div>
+<div class="coin-float cf-4">🍬</div>
+
+<!-- 顶部导航栏 -->
+<div class="top-bar">
+  <a class="back-btn" href="index.html">← 数学乐园</a>
+  <div class="page-title">🏪 小数便利店</div>
+  <div class="star-bar">
+    <span class="star-icon">⭐</span>
+    <span id="starCount">0</span>
+  </div>
+</div>
+
+<!-- ========== 开始画面 ========== -->
+<div class="game-screen" id="startScreen">
+  <div class="start-content">
+    <div class="game-logo">🏪</div>
+    <div class="game-title">小数便利店</div>
+    <div class="game-subtitle">第六单元 · 小数的加法和减法<br>当好收银员，算对每一笔账！</div>
+
+    <div class="chapter-grid">
+      <div class="chapter-card" onclick="selectChapter(1, event)">
+        <div class="chapter-icon">💰</div>
+        <div class="chapter-info">
+          <div class="chapter-name">第一章：收银台</div>
+          <div class="chapter-desc">小数加法 · 两件商品算总价</div>
+        </div>
+        <div class="chapter-stars">⭐</div>
+      </div>
+      <div class="chapter-card" onclick="selectChapter(2, event)">
+        <div class="chapter-icon">🪙</div>
+        <div class="chapter-info">
+          <div class="chapter-name">第二章：找零钱</div>
+          <div class="chapter-desc">小数减法 · 顾客付钱你来找零</div>
+        </div>
+        <div class="chapter-stars">⭐⭐</div>
+      </div>
+      <div class="chapter-card" onclick="selectChapter(3, event)">
+        <div class="chapter-icon">📋</div>
+        <div class="chapter-info">
+          <div class="chapter-name">第三章：进货单</div>
+          <div class="chapter-desc">位数不同的小数加减 · 对齐小数点</div>
+        </div>
+        <div class="chapter-stars">⭐⭐⭐</div>
+      </div>
+      <div class="chapter-card" onclick="selectChapter(4, event)">
+        <div class="chapter-icon">🎉</div>
+        <div class="chapter-info">
+          <div class="chapter-name">第四章：特价大挑战</div>
+          <div class="chapter-desc">混合运算 · 促销大促算清楚！</div>
+        </div>
+        <div class="chapter-stars">⭐⭐⭐</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 游戏画面 ========== -->
+<div class="game-screen hidden" id="gameScreen">
+  <!-- HUD -->
+  <div class="hud">
+    <div class="hud-item" id="heartsDisplay">❤️❤️❤️</div>
+    <div class="hud-item">🎯 <span id="scoreDisplay">0</span></div>
+    <div class="hud-item" id="comboDisplay"></div>
+  </div>
+
+  <!-- 进度条 -->
+  <div class="progress-bar-wrap">
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="progress-text" id="progressText">1/5</div>
+  </div>
+
+  <div class="level-info" id="levelInfo">第 1 关</div>
+  <div class="question-text" id="questionText"></div>
+
+  <!-- ============ 模式1：收银台（小数加法） ============ -->
+  <div class="mode-area hidden" id="mode1">
+    <div class="cashier-desk">
+      <div class="product-row" id="productRow"></div>
+      <div class="cashier-display">
+        <div class="cashier-line">
+          <span class="cashier-label">合计</span>
+          <span class="cashier-value" id="totalValue">? 元</span>
+        </div>
+      </div>
+    </div>
+    <div class="cashier-choices" id="cashierChoices"></div>
+    <div class="action-hint">💰 选出正确的总价！</div>
+  </div>
+
+  <!-- ============ 模式2：找零钱（小数减法） ============ -->
+  <div class="mode-area hidden" id="mode2">
+    <div class="change-desk">
+      <div class="change-info" id="changeInfo"></div>
+      <div class="change-target" id="changeTarget"></div>
+      <div class="coin-tray" id="coinTray"></div>
+    </div>
+    <div class="change-result hidden" id="changeResult"></div>
+    <div class="change-actions">
+      <button class="change-btn btn-clear" onclick="clearCoins()">🗑️ 清空</button>
+      <button class="change-btn btn-confirm" id="changeConfirmBtn" onclick="confirmChange()" disabled>✅ 确认找零</button>
+    </div>
+    <div class="action-hint">🪙 点击硬币找零，凑出正确的金额！</div>
+  </div>
+
+  <!-- ============ 模式3：进货单（位数不同竖式） ============ -->
+  <div class="mode-area hidden" id="mode3">
+    <div class="receipt-desk">
+      <div class="receipt-items" id="receiptItems"></div>
+      <div class="vertical-calc" id="verticalCalc"></div>
+    </div>
+    <div class="receipt-choices" id="receiptChoices"></div>
+    <div class="action-hint" id="mode3Hint">📋 注意对齐小数点！位数不同要补 0</div>
+  </div>
+
+  <!-- ============ 模式4：特价大挑战（混合运算） ============ -->
+  <div class="mode-area hidden" id="mode4">
+    <div class="promo-desk">
+      <div class="promo-banner" id="promoBanner"></div>
+      <div class="promo-question" id="promoQuestion"></div>
+    </div>
+    <div class="promo-choices" id="promoChoices"></div>
+    <div class="action-hint">🎉 算清楚促销价！可以简便计算哦</div>
+  </div>
+</div>
+
+<!-- ========== 结果画面 ========== -->
+<div class="game-screen hidden" id="resultScreen">
+  <div class="result-content">
+    <div class="result-emoji" id="resultEmoji">🎉</div>
+    <div class="result-title" id="resultTitle">闯关成功！</div>
+    <div id="resultStats"></div>
+    <div class="result-btns">
+      <button class="result-btn btn-retry" onclick="restartGame()">🔄 再来一次</button>
+      <a class="result-btn btn-back" href="index.html">🏠 返回数学乐园</a>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span class="toast-emoji" id="toastEmoji"></span>
+  <span id="toastText"></span>
+</div>
+
+<script src="../js/common.js"></script>
+<script src="js/unit6.js"></script>
+</body>
+</html>
