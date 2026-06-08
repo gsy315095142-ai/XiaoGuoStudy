@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏗️ 积木建筑师 - 观察物体（二）</title>
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="css/math.css">
+<link rel="stylesheet" href="css/unit2.css">
+</head>
+<body>
+
+<!-- 天空装饰 -->
+<div class="sun"></div>
+<div class="cloud cloud-1"></div>
+<div class="cloud cloud-2"></div>
+
+<!-- 顶部导航栏 -->
+<div class="top-bar">
+  <a class="back-btn" href="index.html">← 数学乐园</a>
+  <div class="star-bar">
+    ⭐ <span id="starCount">0</span>
+  </div>
+</div>
+
+<!-- ========== 开始画面 ========== -->
+<div class="game-screen" id="startScreen">
+  <div class="start-content">
+    <div class="game-logo">🏗️</div>
+    <div class="game-title">积木建筑师</div>
+    <div class="game-subtitle">第二单元 · 观察物体（二）<br>学会从不同角度观察立体图形</div>
+
+    <div class="chapter-grid">
+      <!-- 第一章：拍照简单 -->
+      <div class="chapter-card" onclick="selectChapter(1)">
+        <div class="chapter-icon">📸</div>
+        <div class="chapter-info">
+          <div class="chapter-name">第一章：新手上路</div>
+          <div class="chapter-desc">看立体，选视图 · 2~3个方块 · 无限时间</div>
+        </div>
+        <div class="chapter-stars">⭐</div>
+      </div>
+
+      <!-- 第二章：拍照进阶 -->
+      <div class="chapter-card" onclick="selectChapter(2)">
+        <div class="chapter-icon">🔍</div>
+        <div class="chapter-info">
+          <div class="chapter-name">第二章：火眼金睛</div>
+          <div class="chapter-desc">更多方块，限时挑战 · 60秒倒计时</div>
+        </div>
+        <div class="chapter-stars">⭐⭐</div>
+      </div>
+
+      <!-- 第三章：建造模式 -->
+      <div class="chapter-card" onclick="selectChapter(3)">
+        <div class="chapter-icon">🏗️</div>
+        <div class="chapter-info">
+          <div class="chapter-name">第三章：小小建筑师</div>
+          <div class="chapter-desc">看蓝图，搭积木 · 终极挑战</div>
+        </div>
+        <div class="chapter-stars">⭐⭐⭐</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 拍照模式游戏画面 ========== -->
+<div class="game-screen hidden" id="gameScreen">
+  <!-- HUD -->
+  <div class="hud">
+    <div class="hud-item" id="hearts">❤️❤️❤️</div>
+    <div class="hud-item" id="scoreDisplay">🎯 0</div>
+    <div class="hud-item" id="comboDisplay" style="display:none">🔥 0连击</div>
+    <div class="hud-item timer-display" id="timerDisplay" style="display:none">⏱ 60s</div>
+  </div>
+
+  <!-- 进度条 -->
+  <div class="progress-bar-wrap">
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="progress-text" id="progressText">1/5</div>
+  </div>
+
+  <!-- 关卡信息 -->
+  <div class="level-info" id="levelInfo">第 1 题</div>
+  <div class="question-text" id="questionText">从正面看是什么形状？</div>
+
+  <!-- 立体展示区 -->
+  <div class="iso-area" id="isoContainer"></div>
+
+  <!-- 方向颜色提示面板 -->
+  <div class="direction-panel" id="directionPanel">
+    <div class="dp-item" data-dir="top">
+      <span class="dp-dot" style="background:#FFD93D"></span> 上面 = 黄色面
+    </div>
+    <div class="dp-item" data-dir="front">
+      <span class="dp-dot" style="background:#F4A7C1"></span> 正面 = 粉色面
+    </div>
+    <div class="dp-item" data-dir="left">
+      <span class="dp-dot" style="background:#7EC8E3"></span> 左面 = 蓝色面
+    </div>
+  </div>
+
+  <!-- 视角切换 -->
+  <div class="view-btns" id="viewBtns"></div>
+
+  <!-- 选项区 -->
+  <div class="options-container" id="optionsContainer"></div>
+
+  <!-- 提示按钮 -->
+  <div style="text-align:center">
+    <button class="hint-btn" id="hintBtn">💡 需要提示</button>
+  </div>
+</div>
+
+<!-- ========== 建造模式游戏画面 ========== -->
+<div class="game-screen hidden" id="buildScreen">
+  <!-- 进度条 -->
+  <div class="progress-bar-wrap">
+    <div class="progress-bar" id="buildProgressBar"></div>
+    <div class="progress-text" id="buildProgressText">1/5</div>
+  </div>
+
+  <div class="level-info" id="buildLevelInfo">第 1 关</div>
+  <div class="question-text" id="buildDesc">根据视图搭建积木</div>
+
+  <div class="build-layout">
+    <!-- 蓝图区 -->
+    <div class="blueprint-area">
+      <div class="blueprint-title">📋 蓝图</div>
+      <div class="blueprint-container" id="blueprintContainer"></div>
+    </div>
+
+    <!-- 搭建区 -->
+    <div class="build-area">
+      <div class="build-area-title">🔨 搭建区</div>
+      <div id="buildGridContainer"></div>
+    </div>
+
+    <!-- 预览区 -->
+    <div class="preview-area">
+      <div class="preview-title">👁️ 实时预览</div>
+      <div class="preview-box" id="buildPreview">
+        <div class="preview-empty">搭建区为空，点击网格开始搭建！</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 结果画面 ========== -->
+<div class="game-screen hidden" id="resultScreen">
+  <div class="result-content">
+    <div class="result-emoji" id="resultEmoji">🏆</div>
+    <div class="result-title" id="resultTitle">闯关成功！</div>
+    <div id="resultStats"></div>
+    <div class="result-btns">
+      <button class="result-btn btn-retry" onclick="restartGame()">🔄 再来一次</button>
+      <a class="result-btn btn-back" href="index.html">🏠 返回数学乐园</a>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span class="toast-emoji" id="toastEmoji"></span>
+  <span id="toastText"></span>
+</div>
+
+<script src="../js/common.js"></script>
+<script src="js/unit2.js"></script>
+</body>
+</html>
