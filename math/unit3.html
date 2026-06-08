@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🫧 凑整消消乐 - 运算定律</title>
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="css/math.css">
+<link rel="stylesheet" href="css/unit3.css">
+</head>
+<body>
+
+<!-- 天空装饰 -->
+<div class="sun"></div>
+<div class="cloud cloud-1"></div>
+<div class="cloud cloud-2"></div>
+
+<!-- 顶部导航栏 -->
+<div class="top-bar">
+  <a class="back-btn" href="index.html">← 数学乐园</a>
+  <div class="page-title">🫧 凑整消消乐</div>
+  <div class="star-bar">
+    <span class="star-icon">⭐</span>
+    <span id="starCount">0</span>
+  </div>
+</div>
+
+<!-- ========== 开始画面 ========== -->
+<div class="game-screen" id="startScreen">
+  <div class="start-content">
+    <div class="game-logo">🫧</div>
+    <div class="game-title">凑整消消乐</div>
+    <div class="game-subtitle">第三单元 · 运算定律<br>在算式中找出能凑整的好朋友！</div>
+
+    <div class="chapter-grid">
+      <div class="chapter-card" onclick="selectChapter(1, event)">
+        <div class="chapter-icon">➕</div>
+        <div class="chapter-info">
+          <div class="chapter-name">第一章：加法凑凑乐</div>
+          <div class="chapter-desc">加法交换律 &amp; 结合律 · 找凑整十、整百的好朋友</div>
+        </div>
+        <div class="chapter-stars">⭐</div>
+      </div>
+      <div class="chapter-card" onclick="selectChapter(2, event)">
+        <div class="chapter-icon">✖️</div>
+        <div class="chapter-info">
+          <div class="chapter-name">第二章：乘法魔法对</div>
+          <div class="chapter-desc">乘法交换律 &amp; 结合律 · 25×4、125×8 黄金组合</div>
+        </div>
+        <div class="chapter-stars">⭐⭐</div>
+      </div>
+      <div class="chapter-card" onclick="selectChapter(3, event)">
+        <div class="chapter-icon">🧙</div>
+        <div class="chapter-info">
+          <div class="chapter-name">第三章：速算大师</div>
+          <div class="chapter-desc">乘法分配律 · 拆分合并综合挑战</div>
+        </div>
+        <div class="chapter-stars">⭐⭐⭐</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 游戏画面 ========== -->
+<div class="game-screen hidden" id="gameScreen">
+  <!-- HUD -->
+  <div class="hud">
+    <div class="hud-item" id="heartsDisplay">❤️❤️❤️</div>
+    <div class="hud-item">🎯 <span id="scoreDisplay">0</span></div>
+    <div class="hud-item" id="comboDisplay"></div>
+  </div>
+
+  <!-- 进度条 -->
+  <div class="progress-bar-wrap">
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="progress-text" id="progressText">1/5</div>
+  </div>
+
+  <!-- 关卡信息 -->
+  <div class="level-info" id="levelInfo">第 1 关</div>
+  <div class="question-text" id="questionText">找出能凑整的好朋友！</div>
+
+  <!-- 公式操作区（主交互区） -->
+  <div class="formula-stage" id="formulaStage"></div>
+
+  <!-- 简算过程展示 -->
+  <div class="simplify-area" id="simplifySteps"></div>
+
+  <!-- 操作提示 -->
+  <div class="action-hint" id="actionHint">👆 点击算式中两个能凑整的数字！</div>
+</div>
+
+<!-- ========== 结果画面 ========== -->
+<div class="game-screen hidden" id="resultScreen">
+  <div class="result-content">
+    <div class="result-emoji" id="resultEmoji">🎉</div>
+    <div class="result-title" id="resultTitle">闯关成功！</div>
+    <div id="resultStats"></div>
+    <div class="result-btns">
+      <button class="result-btn btn-retry" onclick="restartGame()">🔄 再来一次</button>
+      <a class="result-btn btn-back" href="index.html">🏠 返回数学乐园</a>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span class="toast-emoji" id="toastEmoji"></span>
+  <span id="toastText"></span>
+</div>
+
+<script src="../js/common.js"></script>
+<script src="js/unit3.js"></script>
+</body>
+</html>
