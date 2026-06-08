@@ -1,0 +1,695 @@
+/* ========== 🧪 小数实验室 - 第四单元专用样式 ========== */
+
+/* ========== 实验室气泡背景 ========== */
+.lab-bubble {
+  position: fixed;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6), rgba(126,200,227,0.15));
+  z-index: 0;
+  pointer-events: none;
+  animation: bubbleFloat linear infinite;
+}
+.lb-1 { width: 60px; height: 60px; left: 5%;  bottom: -60px; animation-duration: 12s; animation-delay: 0s; }
+.lb-2 { width: 40px; height: 40px; left: 20%; bottom: -40px; animation-duration: 15s; animation-delay: 2s; }
+.lb-3 { width: 80px; height: 80px; left: 50%; bottom: -80px; animation-duration: 18s; animation-delay: 4s; }
+.lb-4 { width: 35px; height: 35px; left: 70%; bottom: -35px; animation-duration: 10s; animation-delay: 1s; }
+.lb-5 { width: 55px; height: 55px; left: 85%; bottom: -55px; animation-duration: 14s; animation-delay: 6s; }
+.lb-6 { width: 25px; height: 25px; left: 35%; bottom: -25px; animation-duration: 11s; animation-delay: 3s; }
+
+@keyframes bubbleFloat {
+  0%   { transform: translateY(0) scale(1); opacity: 0.7; }
+  50%  { transform: translateY(-50vh) scale(1.1); opacity: 0.5; }
+  100% { transform: translateY(-110vh) scale(0.8); opacity: 0; }
+}
+
+/* ========== 通用游戏屏幕 ========== */
+.game-screen {
+  position: relative;
+  z-index: 1;
+  min-height: calc(100vh - 60px);
+  padding-bottom: 30px;
+}
+.hidden { display: none !important; }
+
+/* ========== 进度条 ========== */
+.progress-bar-wrap {
+  width: 100%;
+  max-width: 500px;
+  margin: 10px auto 0;
+  background: rgba(255,255,255,0.5);
+  border-radius: 20px;
+  overflow: hidden;
+  height: 18px;
+  position: relative;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #4ECDC4, #44B09E);
+  border-radius: 20px;
+  transition: width 0.5s ease;
+  width: 0%;
+}
+.progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--text);
+  text-shadow: 0 0 4px white;
+}
+
+/* ========== 开始画面 ========== */
+.start-content {
+  max-width: 560px;
+  margin: 30px auto;
+  text-align: center;
+  padding: 35px 30px;
+  background: rgba(255,255,255,0.92);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+  animation: fadeInUp 0.5s ease-out;
+}
+.game-logo {
+  font-size: 72px;
+  animation: floatBounce 3s ease-in-out infinite;
+  margin-bottom: 10px;
+}
+@keyframes floatBounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  25% { transform: translateY(-12px) scale(1.05); }
+  50% { transform: translateY(-4px) scale(1); }
+  75% { transform: translateY(-16px) scale(1.08); }
+}
+.game-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: var(--blue-dark);
+  margin-bottom: 8px;
+  text-shadow: 2px 2px 0 white;
+}
+.game-subtitle {
+  font-size: 16px;
+  color: var(--text);
+  margin-bottom: 25px;
+  opacity: 0.8;
+}
+
+/* 章节选择 */
+.chapter-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.chapter-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 16px 20px;
+  background: white;
+  border-radius: 18px;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: left;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+}
+.chapter-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+.chapter-card:nth-child(1) { border-color: #A8E6CF; }
+.chapter-card:nth-child(1):hover { border-color: #4ECDC4; background: #E8FFF5; }
+.chapter-card:nth-child(2) { border-color: #FFE0AC; }
+.chapter-card:nth-child(2):hover { border-color: #F0A500; background: #FFF8E8; }
+.chapter-card:nth-child(3) { border-color: #D4A5FF; }
+.chapter-card:nth-child(3):hover { border-color: #9B59B6; background: #F3E5F5; }
+.chapter-card:nth-child(4) { border-color: #A8D8EA; }
+.chapter-card:nth-child(4):hover { border-color: #3498DB; background: #EBF5FB; }
+
+.chapter-icon {
+  font-size: 38px;
+  min-width: 50px;
+  text-align: center;
+}
+.chapter-info { flex: 1; }
+.chapter-name {
+  font-size: 17px;
+  font-weight: bold;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+.chapter-desc {
+  font-size: 13px;
+  color: var(--text);
+  opacity: 0.7;
+}
+.chapter-stars {
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+/* ========== HUD ========== */
+.hud {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 8px 20px;
+  margin: 0 auto 5px;
+  max-width: 600px;
+  flex-wrap: wrap;
+}
+.hud-item {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--text);
+  background: rgba(255,255,255,0.8);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+/* ========== 关卡信息 ========== */
+.level-info {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--blue-dark);
+  margin-bottom: 4px;
+}
+.question-text {
+  text-align: center;
+  font-size: 16px;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+
+/* ========== 模式区域通用 ========== */
+.mode-area {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+.action-hint {
+  text-align: center;
+  font-size: 15px;
+  color: var(--text);
+  opacity: 0.7;
+  margin-top: 12px;
+  min-height: 22px;
+}
+
+/* ================================================================
+   模式1：小数诞生 - 方格涂色 + 点选
+   ================================================================ */
+.grid-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+.decimal-grid {
+  display: grid;
+  gap: 3px;
+  padding: 12px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+.grid-cell {
+  width: 42px;
+  height: 42px;
+  border-radius: 6px;
+  border: 2px solid #E0E0E0;
+  transition: all 0.2s;
+  cursor: default;
+}
+.grid-cell.colored {
+  border-color: #4ECDC4;
+  background: linear-gradient(135deg, #A8E6CF, #4ECDC4);
+  animation: cellColor 0.3s ease;
+}
+@keyframes cellColor {
+  0% { transform: scale(0.5); opacity: 0; }
+  60% { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.fraction-display {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+/* 选项按钮（替代输入框） */
+.grid-choices {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+.grid-choice {
+  padding: 14px 32px;
+  font-size: 26px;
+  font-weight: bold;
+  color: var(--text);
+  background: white;
+  border: 3px solid #D0D8E0;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+  min-width: 90px;
+  text-align: center;
+}
+.grid-choice:hover {
+  transform: translateY(-4px) scale(1.05);
+  border-color: #4ECDC4;
+  box-shadow: 0 6px 20px rgba(78,205,196,0.25);
+}
+.grid-choice.correct {
+  background: #D5F5E3;
+  border-color: #4ECDC4;
+  color: #27AE60;
+  animation: correctPop 0.5s ease;
+}
+.grid-choice.wrong {
+  background: #FDEDEC;
+  border-color: #FF6B6B;
+  color: #E74C3C;
+  animation: wrongShake 0.5s ease;
+}
+
+@keyframes correctPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+@keyframes wrongShake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
+}
+
+/* ================================================================
+   模式2：大小天平
+   ================================================================ */
+.balance-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 30px 16px;
+  background: rgba(255,255,255,0.92);
+  border-radius: 24px;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.08);
+}
+.balance-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-width: 120px;
+}
+.balance-number {
+  font-size: 32px;
+  font-weight: bold;
+  color: var(--text);
+  background: #F0F4F8;
+  padding: 10px 18px;
+  border-radius: 14px;
+  border: 3px solid #D0D8E0;
+  min-width: 80px;
+  text-align: center;
+}
+.balance-pan {
+  font-size: 50px;
+  transition: transform 0.5s ease;
+}
+.balance-beam {
+  font-size: 36px;
+  font-weight: bold;
+  color: var(--blue-dark);
+  min-width: 60px;
+  text-align: center;
+}
+
+/* 天平倾斜动画 */
+.balance-stage.tilt-left .left-side .balance-pan  { transform: translateY(12px); }
+.balance-stage.tilt-left .right-side .balance-pan { transform: translateY(-12px); }
+.balance-stage.tilt-right .left-side .balance-pan  { transform: translateY(-12px); }
+.balance-stage.tilt-right .right-side .balance-pan { transform: translateY(12px); }
+
+.choice-btns {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.choice-btn {
+  padding: 14px 28px;
+  font-size: 20px;
+  font-weight: bold;
+  border: 3px solid transparent;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+  color: var(--text);
+  background: white;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  min-width: 100px;
+}
+.choice-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+.choice-btn.btn-gt { border-color: #4ECDC4; }
+.choice-btn.btn-gt:hover { background: #E8FFF5; }
+.choice-btn.btn-eq { border-color: #F0A500; }
+.choice-btn.btn-eq:hover { background: #FFF8E8; }
+.choice-btn.btn-lt { border-color: #FF6B6B; }
+.choice-btn.btn-lt:hover { background: #FFF0F0; }
+
+.choice-btn.correct {
+  background: #D5F5E3 !important;
+  border-color: #4ECDC4 !important;
+  color: #27AE60 !important;
+  animation: correctPop 0.5s ease;
+}
+.choice-btn.wrong {
+  background: #FDEDEC !important;
+  border-color: #FF6B6B !important;
+  color: #E74C3C !important;
+  animation: wrongShake 0.5s ease;
+}
+
+/* ================================================================
+   模式3：魔幻药水
+   ================================================================ */
+.potion-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background: rgba(255,255,255,0.92);
+  border-radius: 24px;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.08);
+}
+.target-display {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #FFF8E1;
+  padding: 10px 24px;
+  border-radius: 16px;
+  border: 2px solid #F0A500;
+}
+.target-label {
+  font-size: 14px;
+  color: #F0A500;
+  font-weight: bold;
+}
+.target-value {
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--text);
+}
+
+.flask {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #EBF5FB, #D6EAF8);
+  border: 4px solid #AED6F1;
+  box-shadow: 0 6px 20px rgba(52,152,219,0.15);
+  transition: all 0.3s;
+}
+.flask-number {
+  font-size: 36px;
+  font-weight: bold;
+  color: var(--text);
+  z-index: 2;
+  transition: all 0.4s ease;
+}
+.flask-liquid {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(180deg, rgba(78,205,196,0.3), rgba(78,205,196,0.6));
+  border-radius: 0 0 50% 50%;
+  animation: liquidWave 3s ease-in-out infinite;
+}
+@keyframes liquidWave {
+  0%, 100% { height: 38%; }
+  50% { height: 42%; }
+}
+
+/* 药水成功动画 */
+.flask.flask-success {
+  border-color: #4ECDC4;
+  box-shadow: 0 0 30px rgba(78,205,196,0.5);
+  animation: flaskPop 0.5s ease;
+}
+@keyframes flaskPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.potion-shelf {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.potion-btn {
+  padding: 12px 20px;
+  font-size: 17px;
+  font-weight: bold;
+  border: 3px solid transparent;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+  color: white;
+}
+.potion-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.potion-btn.potion-red {
+  background: linear-gradient(135deg, #FF6B6B, #EE5A24);
+  border-color: #C0392B;
+}
+.potion-btn.potion-blue {
+  background: linear-gradient(135deg, #74B9FF, #0984E3);
+  border-color: #2980B9;
+}
+.potion-btn.potion-green {
+  background: linear-gradient(135deg, #A8E6CF, #6BCB77);
+  border-color: #27AE60;
+  color: var(--text);
+}
+
+.potion-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* ================================================================
+   模式4：精密刻度
+   ================================================================ */
+.ruler-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+  background: rgba(255,255,255,0.92);
+  border-radius: 24px;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.08);
+}
+.ruler-number {
+  font-size: 42px;
+  font-weight: bold;
+  color: var(--text);
+}
+.ruler-hint {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--blue-dark);
+  background: #EBF5FB;
+  padding: 8px 20px;
+  border-radius: 12px;
+  border: 2px solid #AED6F1;
+}
+.ruler-choices {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.ruler-choice {
+  padding: 14px 28px;
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--text);
+  background: white;
+  border: 3px solid #D0D8E0;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+}
+.ruler-choice:hover {
+  transform: translateY(-3px);
+  border-color: #4ECDC4;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+.ruler-choice.correct {
+  background: #D5F5E3;
+  border-color: #4ECDC4;
+  color: #27AE60;
+  animation: correctPop 0.5s ease;
+}
+.ruler-choice.wrong {
+  background: #FDEDEC;
+  border-color: #FF6B6B;
+  color: #E74C3C;
+  animation: wrongShake 0.5s ease;
+}
+
+/* ========== 星星粒子 ========== */
+.star-particle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 99;
+  font-size: 22px;
+  animation: starFly 1.2s ease-out forwards;
+}
+@keyframes starFly {
+  0% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+  100% { opacity: 0; transform: translateY(-100px) scale(0.3) rotate(360deg); }
+}
+
+/* ========== 结果画面 ========== */
+.result-content {
+  max-width: 460px;
+  margin: 60px auto;
+  text-align: center;
+  padding: 40px 30px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+  animation: fadeInUp 0.5s ease-out;
+}
+.result-emoji {
+  font-size: 80px;
+  animation: bounce 1.5s infinite;
+  margin-bottom: 10px;
+}
+.result-title {
+  font-size: 30px;
+  font-weight: bold;
+  color: var(--blue-dark);
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 0 white;
+}
+.stat-row {
+  font-size: 17px;
+  color: var(--text);
+  margin: 8px 0;
+  padding: 8px 0;
+  border-bottom: 1px dashed #eee;
+}
+.stat-row strong {
+  color: var(--blue-dark);
+  font-size: 20px;
+}
+.result-btns {
+  margin-top: 25px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.result-btn {
+  padding: 12px 28px;
+  border-radius: 25px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: none;
+  text-decoration: none;
+  display: inline-block;
+}
+.result-btn:hover { transform: translateY(-3px); }
+.btn-retry {
+  background: linear-gradient(135deg, #4ECDC4, #44B09E);
+  color: white;
+}
+.btn-retry:hover { background: #44B09E; }
+.btn-back {
+  background: #FFF0F5;
+  color: #C0392B;
+}
+.btn-back:hover { background: #FADBD8; }
+
+/* ========== 知识卡片 ========== */
+.knowledge-card {
+  margin-top: 20px;
+  padding: 16px 20px;
+  background: #FFF8E1;
+  border-radius: 16px;
+  border: 2px solid #F0A500;
+  text-align: left;
+}
+.knowledge-card h3 {
+  font-size: 16px;
+  color: #F0A500;
+  margin-bottom: 8px;
+}
+.knowledge-card p {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 4px;
+}
+
+/* ========== 通用动画 ========== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* ========== 响应式 ========== */
+@media (max-width: 600px) {
+  .grid-cell { width: 34px; height: 34px; }
+  .grid-choice { padding: 12px 22px; font-size: 22px; }
+  .balance-number { font-size: 26px; padding: 8px 12px; }
+  .choice-btn { padding: 12px 20px; font-size: 18px; }
+  .flask { width: 140px; height: 140px; }
+  .flask-number { font-size: 28px; }
+  .ruler-number { font-size: 34px; }
+  .ruler-choice { padding: 12px 20px; font-size: 18px; }
+}
