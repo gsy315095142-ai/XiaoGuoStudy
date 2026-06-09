@@ -12,7 +12,7 @@ var unitInfo = {
   6: { icon: '🏪', name: '小数的加法和减法', page: 'unit6.html' },
   7: { icon: '🪞', name: '图形的运动（二）', page: 'unit7.html' },
   8: { icon: '🕵️', name: '平均数与条形统计图', page: 'unit8.html' },
-  9: { icon: '🐔', name: '鸡兔同笼' },
+  9: { icon: '🐔', name: '鸡兔同笼', page: 'unit9.html' },
   review: { icon: '🏆', name: '综合大闯关' }
 };
 

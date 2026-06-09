@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐔 农场大侦探 - 鸡兔同笼</title>
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="css/math.css">
+<link rel="stylesheet" href="css/unit9.css">
+</head>
+<body>
+
+<!-- 背景装饰：飘落的动物 -->
+<div class="farm-float ff-1">🌾</div>
+<div class="farm-float ff-2">🐾</div>
+<div class="farm-float ff-3">🐣</div>
+<div class="farm-float ff-4">🥕</div>
+
+<!-- 顶部导航栏 -->
+<div class="top-bar">
+  <a class="back-btn" href="index.html">← 数学乐园</a>
+  <div class="page-title">🐔 农场大侦探</div>
+  <div class="star-bar">
+    <span class="star-icon">⭐</span>
+    <span id="starCount">0</span>
+  </div>
+</div>
+
+<!-- ========== 开始画面 ========== -->
+<div class="game-screen" id="startScreen">
+  <div class="start-content">
+    <div class="game-logo">🐔</div>
+    <div class="game-title">农场大侦探</div>
+    <div class="game-subtitle">第九单元 · 鸡兔同笼<br>农场里的数学谜题，等你来破解！</div>
+
+    <div class="chapter-grid">
+      <div class="chapter-card" onclick="selectChapter(1, event)">
+        <div class="chapter-icon">🐔</div>
+        <div class="chapter-info">
+          <div class="chapter-name">第一章：兔笼探秘</div>
+          <div class="chapter-desc">自己搭配鸡和兔 · 动手探索假设法</div>
+        </div>
+        <div class="chapter-stars">⭐</div>
+      </div>
+      <div class="chapter-card" onclick="selectChapter(2, event)">
+        <div class="chapter-icon">🧮</div>
+        <div class="chapter-info">
+          <div class="chapter-name">第二章：算术推理</div>
+          <div class="chapter-desc">列式计算 · 经典鸡兔同笼</div>
+        </div>
+        <div class="chapter-stars">⭐⭐</div>
+      </div>
+      <div class="chapter-card" onclick="selectChapter(3, event)">
+        <div class="chapter-icon">🧩</div>
+        <div class="chapter-info">
+          <div class="chapter-name">第三章：变形谜题</div>
+          <div class="chapter-desc">龟鹤同池 · 大船小船 · 变式挑战</div>
+        </div>
+        <div class="chapter-stars">⭐⭐⭐</div>
+      </div>
+      <div class="chapter-card" onclick="selectChapter(4, event)">
+        <div class="chapter-icon">🏆</div>
+        <div class="chapter-info">
+          <div class="chapter-name">第四章：终极挑战</div>
+          <div class="chapter-desc">综合应用 · 反向推理 · 混合题型</div>
+        </div>
+        <div class="chapter-stars">⭐⭐⭐</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 游戏画面 ========== -->
+<div class="game-screen hidden" id="gameScreen">
+  <!-- HUD -->
+  <div class="hud">
+    <div class="hud-item" id="heartsDisplay">❤️❤️❤️</div>
+    <div class="hud-item">🎯 <span id="scoreDisplay">0</span></div>
+    <div class="hud-item" id="comboDisplay"></div>
+  </div>
+
+  <!-- 进度条 -->
+  <div class="progress-bar-wrap">
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="progress-text" id="progressText">1/7</div>
+  </div>
+
+  <div class="level-info" id="levelInfo">第 1 关</div>
+  <div class="question-text" id="questionText"></div>
+
+  <!-- ============ 模式1：兔笼探秘（搭配入笼） ============ -->
+  <div class="mode-area hidden" id="mode1">
+    <div class="farm-pen">
+      <!-- 操作提示 -->
+      <div class="pen-hint" id="penHint">🤔 想一想，放几只鸡、几只兔？</div>
+
+      <!-- 笼子预览区 -->
+      <div class="pen-cage" id="penCage">
+        <div class="cage-label">🧺 你的笼子</div>
+        <div class="cage-animals" id="cageAnimals">
+          <!-- 动态渲染的动物们 -->
+        </div>
+        <div class="cage-counters">
+          <span class="cage-counter" id="cageHeads">头数: <b>0</b> / 5</span>
+          <span class="cage-counter" id="cageFeet">脚数: <b>0</b> / 14</span>
+        </div>
+      </div>
+
+      <!-- 动物选择区 -->
+      <div class="pen-pool">
+        <div class="pool-label">🐣 选择动物放入笼子</div>
+        <div class="pool-row">
+          <div class="pool-item chicken-pool">
+            <div class="pool-emoji">🐔</div>
+            <div class="pool-name">鸡（2只脚）</div>
+            <div class="pool-controls">
+              <button class="pool-btn pool-minus" onclick="mode1Adjust('chicken', -1)">−</button>
+              <span class="pool-count" id="chickenCount">0</span>
+              <button class="pool-btn pool-plus" onclick="mode1Adjust('chicken', 1)">+</button>
+            </div>
+          </div>
+          <div class="pool-item rabbit-pool">
+            <div class="pool-emoji">🐰</div>
+            <div class="pool-name">兔（4只脚）</div>
+            <div class="pool-controls">
+              <button class="pool-btn pool-minus" onclick="mode1Adjust('rabbit', -1)">−</button>
+              <span class="pool-count" id="rabbitCount">0</span>
+              <button class="pool-btn pool-plus" onclick="mode1Adjust('rabbit', 1)">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 操作按钮 -->
+      <div class="pen-actions mode1-actions">
+        <button class="pen-clear-btn" onclick="mode1Clear()">🗑️ 清空笼子</button>
+        <button class="pen-submit-btn" id="penSubmitBtn" onclick="mode1Submit()">✅ 提交答案</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 模式2：算术推理（计算选择题） ============ -->
+  <div class="mode-area hidden" id="mode2">
+    <div class="calc-desk" id="calcDesk"></div>
+    <div class="calc-choices" id="calcChoices"></div>
+    <div class="action-hint">🧮 用假设法算一算，选出正确答案！</div>
+  </div>
+
+  <!-- ============ 模式3：变形谜题（变式选择题） ============ -->
+  <div class="mode-area hidden" id="mode3">
+    <div class="puzzle-desk" id="puzzleDesk"></div>
+    <div class="puzzle-choices" id="puzzleChoices"></div>
+    <div class="action-hint">🧩 换个场景，思路是一样的！</div>
+  </div>
+
+  <!-- ============ 模式4：终极挑战（综合） ============ -->
+  <div class="mode-area hidden" id="mode4">
+    <div class="final-desk" id="finalDesk"></div>
+    <div class="final-choices" id="finalChoices"></div>
+    <div class="action-hint">🏆 集合所有技能，完成终极挑战！</div>
+  </div>
+</div>
+
+<!-- ========== 结果画面 ========== -->
+<div class="game-screen hidden" id="resultScreen">
+  <div class="result-content">
+    <div class="result-emoji" id="resultEmoji">🏆</div>
+    <div class="result-title" id="resultTitle">谜题破解！</div>
+    <div id="resultStats"></div>
+    <div class="result-btns">
+      <button class="result-btn btn-retry" onclick="restartGame()">🔄 再来一次</button>
+      <a class="result-btn btn-back" href="index.html">🏠 返回数学乐园</a>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span class="toast-emoji" id="toastEmoji"></span>
+  <span id="toastText"></span>
+</div>
+
+<script src="../js/common.js"></script>
+<script src="js/unit9.js"></script>
+</body>
+</html>
