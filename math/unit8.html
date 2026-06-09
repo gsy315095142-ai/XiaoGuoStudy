@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🕵️ 数据侦探局 - 平均数与条形统计图</title>
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="css/math.css">
+<link rel="stylesheet" href="css/unit8.css">
+</head>
+<body>
+
+<!-- 背景装饰：飘落的放大镜和指纹 -->
+<div class="detective-float df-1">🔍</div>
+<div class="detective-float df-2">👣</div>
+<div class="detective-float df-3">🔍</div>
+<div class="detective-float df-4">🔎</div>
+
+<!-- 顶部导航栏 -->
+<div class="top-bar">
+  <a class="back-btn" href="index.html">← 数学乐园</a>
+  <div class="page-title">🕵️ 数据侦探局</div>
+  <div class="star-bar">
+    <span class="star-icon">⭐</span>
+    <span id="starCount">0</span>
+  </div>
+</div>
+
+<!-- ========== 开始画面 ========== -->
+<div class="game-screen" id="startScreen">
+  <div class="start-content">
+    <div class="game-logo">🕵️</div>
+    <div class="game-title">数据侦探局</div>
+    <div class="game-subtitle">第八单元 · 平均数与条形统计图<br>用数据破案，当个优秀小侦探！</div>
+
+    <div class="chapter-grid">
+      <div class="chapter-card" onclick="selectChapter(1, event)">
+        <div class="chapter-icon">🔍</div>
+        <div class="chapter-info">
+          <div class="chapter-name">第一章：线索平衡</div>
+          <div class="chapter-desc">移多补少 · 直观理解平均数</div>
+        </div>
+        <div class="chapter-stars">⭐</div>
+      </div>
+      <div class="chapter-card" onclick="selectChapter(2, event)">
+        <div class="chapter-icon">🧮</div>
+        <div class="chapter-info">
+          <div class="chapter-name">第二章：嫌疑人排查</div>
+          <div class="chapter-desc">求平均数 · 用公式计算</div>
+        </div>
+        <div class="chapter-stars">⭐⭐</div>
+      </div>
+      <div class="chapter-card" onclick="selectChapter(3, event)">
+        <div class="chapter-icon">📊</div>
+        <div class="chapter-info">
+          <div class="chapter-name">第三章：案件档案</div>
+          <div class="chapter-desc">复式条形统计图 · 读图分析</div>
+        </div>
+        <div class="chapter-stars">⭐⭐⭐</div>
+      </div>
+      <div class="chapter-card" onclick="selectChapter(4, event)">
+        <div class="chapter-icon">🏆</div>
+        <div class="chapter-info">
+          <div class="chapter-name">第四章：终极破案</div>
+          <div class="chapter-desc">综合应用 · 平均数与统计图混合</div>
+        </div>
+        <div class="chapter-stars">⭐⭐⭐</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 游戏画面 ========== -->
+<div class="game-screen hidden" id="gameScreen">
+  <!-- HUD -->
+  <div class="hud">
+    <div class="hud-item" id="heartsDisplay">❤️❤️❤️</div>
+    <div class="hud-item">🎯 <span id="scoreDisplay">0</span></div>
+    <div class="hud-item" id="comboDisplay"></div>
+  </div>
+
+  <!-- 进度条 -->
+  <div class="progress-bar-wrap">
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="progress-text" id="progressText">1/7</div>
+  </div>
+
+  <div class="level-info" id="levelInfo">第 1 关</div>
+  <div class="question-text" id="questionText"></div>
+
+  <!-- ============ 模式1：线索平衡（点击搬运法） ============ -->
+  <div class="mode-area hidden" id="mode1">
+    <div class="balance-desk">
+      <!-- 操作提示 -->
+      <div class="balance-hint" id="balanceHint">👆 先点击一个柱子取走方块，再点击另一个柱子放下</div>
+      <!-- 步数显示 -->
+      <div class="balance-steps" id="balanceSteps">已移动：0 步</div>
+      <!-- 柱子区域 -->
+      <div class="balance-columns" id="balanceDesk"></div>
+      <!-- 平均线 -->
+      <div class="balance-avg-line" id="balanceAvgLine"></div>
+      <div class="balance-avg-label" id="balanceAvgLabel">平均数 = ?</div>
+    </div>
+    <!-- 重置按钮 -->
+    <div class="balance-actions">
+      <button class="balance-reset-btn" id="balanceResetBtn" onclick="resetMode1()">🔄 重置</button>
+    </div>
+  </div>
+
+  <!-- ============ 模式2：嫌疑人排查（求平均数） ============ -->
+  <div class="mode-area hidden" id="mode2">
+    <div class="suspect-desk" id="suspectDesk"></div>
+    <div class="suspect-choices" id="suspectChoices"></div>
+    <div class="action-hint">🧮 算出正确结果，锁定嫌疑人！</div>
+  </div>
+
+  <!-- ============ 模式3：案件档案（复式条形统计图） ============ -->
+  <div class="mode-area hidden" id="mode3">
+    <div class="chart-desk">
+      <div class="chart-subtitle" id="chartSubtitle"></div>
+      <canvas id="chartCanvas" width="560" height="340"></canvas>
+    </div>
+    <div class="chart-question" id="chartQuestion"></div>
+    <div class="chart-choices" id="chartChoices"></div>
+    <div class="action-hint">📊 看清楚统计图，选出答案！</div>
+  </div>
+
+  <!-- ============ 模式4：终极破案（综合） ============ -->
+  <div class="mode-area hidden" id="mode4">
+    <div class="final-desk" id="finalDesk"></div>
+    <div class="final-choices" id="finalChoices"></div>
+    <div class="action-hint">🏆 集合所有技能，破获终极案件！</div>
+  </div>
+</div>
+
+<!-- ========== 结果画面 ========== -->
+<div class="game-screen hidden" id="resultScreen">
+  <div class="result-content">
+    <div class="result-emoji" id="resultEmoji">🏆</div>
+    <div class="result-title" id="resultTitle">案件告破！</div>
+    <div id="resultStats"></div>
+    <div class="result-btns">
+      <button class="result-btn btn-retry" onclick="restartGame()">🔄 再来一次</button>
+      <a class="result-btn btn-back" href="index.html">🏠 返回数学乐园</a>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span class="toast-emoji" id="toastEmoji"></span>
+  <span id="toastText"></span>
+</div>
+
+<script src="../js/common.js"></script>
+<script src="js/unit8.js"></script>
+</body>
+</html>
