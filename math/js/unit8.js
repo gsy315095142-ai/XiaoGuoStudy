@@ -222,6 +222,7 @@ var score = 0;
 var combo = 0;
 var answered = false;
 var chartQIdx = 0;
+var earnedStars = 0; // 【修复 #7】记录本局获得的星星数
 
 // 模式1：搬运状态
 var m1 = {
@@ -239,7 +240,10 @@ var m1 = {
 // 初始化 & 通用
 // ============================================================
 
-function selectChapter(ch) {
+// 【修复 #11】接收 event 参数，添加波纹效果
+function selectChapter(ch, event) {
+  if (event) createRipple(event, event.currentTarget);
+
   currentChapter = ch;
   currentLevel = 0;
   lives = 3;
@@ -247,6 +251,7 @@ function selectChapter(ch) {
   combo = 0;
   answered = false;
   chartQIdx = 0;
+  earnedStars = 0; // 【修复 #7】重置星星
   m1.selectedCol = -1;
   m1.animating = false;
 
@@ -317,6 +322,7 @@ function onCorrect() {
   combo++;
   var pts = 10 + (combo >= 3 ? combo * 2 : 0);
   score += pts;
+  earnedStars++; // 【修复 #7】
   addStars(1);
   showToast('⭐', '答对了！+' + pts + '分', 1200);
   spawnStarParticles(3);
@@ -339,13 +345,28 @@ function onCorrect() {
 
 function onWrong() {
   if (answered) return;
+  answered = true; // 【修复 #5】答错后立即锁定，防止重复点击
   combo = 0;
   lives--;
   updateHUD();
   showToast('❌', '答错了，再想想！', 1200);
   if (lives <= 0) {
-    answered = true;
     setTimeout(showResult, 1200);
+  } else {
+    // 【修复 #5】还有生命时，1.3秒后自动跳到下一题
+    setTimeout(function() {
+      if (currentChapter === 3) {
+        chartQIdx++;
+        var lv = LEVELS[3][currentLevel];
+        if (chartQIdx >= lv.questions.length) {
+          chartQIdx = 0;
+          currentLevel++;
+        }
+      } else {
+        currentLevel++;
+      }
+      loadLevel();
+    }, 1300);
   }
 }
 
@@ -361,7 +382,8 @@ function showResult() {
   var stats = '<div class="stat-row">📌 章节：<strong>' + chapterNames[currentChapter] + '</strong></div>';
   stats += '<div class="stat-row">🎯 得分：<strong>' + score + '</strong></div>';
   stats += '<div class="stat-row">❤️ 剩余生命：<strong>' + lives + '</strong></div>';
-  stats += '<div class="stat-row">⭐ 获得星星：<strong>' + score + '</strong></div>';
+  // 【修复 #7】用 earnedStars 替代 score 显示星星数
+  stats += '<div class="stat-row">⭐ 获得星星：<strong>' + earnedStars + '</strong></div>';
 
   if (won) {
     stats += '<div class="knowledge-card">';
@@ -623,6 +645,7 @@ function checkBalanceComplete() {
     combo++;
     var pts = 10 + (combo >= 3 ? combo * 2 : 0);
     score += pts;
+    earnedStars++; // 【修复 #7】
     addStars(1);
     spawnStarParticles(5);
     updateHUD();

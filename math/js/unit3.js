@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 🫧 凑整消消乐 - 第三单元：运算定律
  * 游戏核心逻辑（v2 - 直接在公式中圈数配对）
  *
@@ -333,6 +333,9 @@ function selectChapter(ch, event) {
   if (event) createRipple(event, event.currentTarget);
   currentChapter = ch;
   currentLevel = 0;
+  // 【修复 #4】切换章节时重置血量和得分
+  score = 0; combo = 0; maxCombo = 0; hp = 3;
+  correctCount = 0; wrongCount = 0;
 
   document.getElementById('startScreen').classList.add('hidden');
   document.getElementById('gameScreen').classList.remove('hidden');
@@ -408,6 +411,19 @@ function renderFormulaStage() {
 // 点击数字
 // ============================================================
 
+// 【修复 #6】检查某数字是否还有未配对的 pair
+function hasUnmatchedPair(tokenIdx) {
+  var pairs = currentLevelData.pairs;
+  for (var i = 0; i < pairs.length; i++) {
+    if (matchedPairIndices.indexOf(i) === -1) {
+      if (pairs[i][0] === tokenIdx || pairs[i][1] === tokenIdx) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 function onNumClick(idx) {
   var el = getTokenEl(idx);
   if (!el) return;
@@ -443,8 +459,9 @@ function onNumClick(idx) {
       score += points;
 
       firstEl.classList.remove('fnum-selected');
-      firstEl.classList.add('fnum-matched');
-      secondEl.classList.add('fnum-matched');
+      // 【修复 #6】只有该数字参与的 pair 全部配完才标记为 matched
+      if (!hasUnmatchedPair(selectedTokenIdx)) firstEl.classList.add('fnum-matched');
+      if (!hasUnmatchedPair(idx)) secondEl.classList.add('fnum-matched');
 
       // 弹出 "=结果"
       var opSym = currentLevelData.type === 'mul' ? ' × ' : ' + ';

@@ -764,3 +764,7 @@
   .receipt-choice { padding: 12px 20px; font-size: 18px; }
   .promo-choice { padding: 12px 20px; font-size: 17px; }
 }
+  
+/* 【修复 #3】跳过按钮样式 */  
+.btn-skip { color: #888; background: #F0F0F0; }  
+.btn-skip:hover { background: #E0E0E0; } 

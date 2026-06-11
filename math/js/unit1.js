@@ -582,6 +582,12 @@ function endGame(survived) {
 }
 
 function restartGame() {
+  // 【修复 #10】重置难度为简单
+  difficulty = 1;
+  document.querySelectorAll('.diff-btn').forEach(function(b) { b.classList.remove('active'); });
+  var firstBtn = document.querySelector('.diff-btn[data-diff="1"]');
+  if (firstBtn) firstBtn.classList.add('active');
+
   document.getElementById('resultScreen').classList.add('hidden');
   document.getElementById('startScreen').classList.remove('hidden');
 }

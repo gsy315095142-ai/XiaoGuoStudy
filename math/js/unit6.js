@@ -1,26 +1,21 @@
-/**
- * 🏪 小数便利店 - 第六单元：小数的加法和减法
- *
- * 四个章节：
- *   1. 收银台    — 小数加法（两件商品算总价）
- *   2. 找零钱    — 小数减法（顾客付钱，选硬币找零）
- *   3. 进货单    — 位数不同的小数加减（竖式展示，补0对齐）
- *   4. 特价大挑战 — 混合运算 + 简便计算
- */
+﻿/**
+ * 馃彧 灏忔暟渚垮埄搴?- 绗叚鍗曞厓锛氬皬鏁扮殑鍔犳硶鍜屽噺娉? *
+ * 鍥涗釜绔犺妭锛? *   1. 鏀堕摱鍙?   鈥?灏忔暟鍔犳硶锛堜袱浠跺晢鍝佺畻鎬讳环锛? *   2. 鎵鹃浂閽?   鈥?灏忔暟鍑忔硶锛堥【瀹粯閽憋紝閫夌‖甯佹壘闆讹級
+ *   3. 杩涜揣鍗?   鈥?浣嶆暟涓嶅悓鐨勫皬鏁板姞鍑忥紙绔栧紡灞曠ず锛岃ˉ0瀵归綈锛? *   4. 鐗逛环澶ф寫鎴?鈥?娣峰悎杩愮畻 + 绠€渚胯绠? */
 
 // ============================================================
-// 关卡数据
+// 鍏冲崱鏁版嵁
 // ============================================================
 
 var LEVELS = {
 
-  // ===== 第一章：收银台（小数加法）=====
-  // items: [{emoji, name, price}]  answer: 总价  choices: 选项
+  // ===== 绗竴绔狅細鏀堕摱鍙帮紙灏忔暟鍔犳硶锛?====
+  // items: [{emoji, name, price}]  answer: 鎬讳环  choices: 閫夐」
   1: [
     {
       items: [
-        { emoji: '🍫', name: '巧克力', price: 3.50 },
-        { emoji: '🥤', name: '果汁', price: 2.80 }
+        { emoji: '馃崼', name: '宸у厠鍔?, price: 3.50 },
+        { emoji: '馃イ', name: '鏋滄眮', price: 2.80 }
       ],
       answer: 6.30,
       choices: [6.30, 5.80, 6.13],
@@ -28,8 +23,8 @@ var LEVELS = {
     },
     {
       items: [
-        { emoji: '🍞', name: '面包', price: 4.25 },
-        { emoji: '🥛', name: '牛奶', price: 3.60 }
+        { emoji: '馃崬', name: '闈㈠寘', price: 4.25 },
+        { emoji: '馃', name: '鐗涘ザ', price: 3.60 }
       ],
       answer: 7.85,
       choices: [7.85, 7.75, 8.25],
@@ -37,26 +32,26 @@ var LEVELS = {
     },
     {
       items: [
-        { emoji: '🖊️', name: '钢笔', price: 8.90 },
-        { emoji: '📓', name: '笔记本', price: 5.45 }
+        { emoji: '馃枈锔?, name: '閽㈢瑪', price: 8.90 },
+        { emoji: '馃摀', name: '绗旇鏈?, price: 5.45 }
       ],
       answer: 14.35,
       choices: [14.35, 13.35, 14.25],
-      hint: '8.90 + 5.45 = ? 注意进位！'
+      hint: '8.90 + 5.45 = ? 娉ㄦ剰杩涗綅锛?
     },
     {
       items: [
-        { emoji: '🍊', name: '橙子', price: 6.75 },
-        { emoji: '🍎', name: '苹果', price: 4.38 }
+        { emoji: '馃崐', name: '姗欏瓙', price: 6.75 },
+        { emoji: '馃崕', name: '鑻规灉', price: 4.38 }
       ],
       answer: 11.13,
       choices: [11.13, 10.13, 11.23],
-      hint: '6.75 + 4.38 = ? 百分位也要加！'
+      hint: '6.75 + 4.38 = ? 鐧惧垎浣嶄篃瑕佸姞锛?
     },
     {
       items: [
-        { emoji: '🎨', name: '水彩笔', price: 12.80 },
-        { emoji: '✂️', name: '剪刀', price: 7.65 }
+        { emoji: '馃帹', name: '姘村僵绗?, price: 12.80 },
+        { emoji: '鉁傦笍', name: '鍓垁', price: 7.65 }
       ],
       answer: 20.45,
       choices: [20.45, 19.45, 20.55],
@@ -64,8 +59,8 @@ var LEVELS = {
     },
     {
       items: [
-        { emoji: '📚', name: '故事书', price: 15.60 },
-        { emoji: '🧸', name: '小熊', price: 9.85 }
+        { emoji: '馃摎', name: '鏁呬簨涔?, price: 15.60 },
+        { emoji: '馃Ц', name: '灏忕唺', price: 9.85 }
       ],
       answer: 25.45,
       choices: [25.45, 24.45, 25.55],
@@ -73,118 +68,117 @@ var LEVELS = {
     }
   ],
 
-  // ===== 第二章：找零钱（小数减法）=====
-  // item: 商品  price: 价格  paid: 顾客付的钱  answer: 找零
+  // ===== 绗簩绔狅細鎵鹃浂閽憋紙灏忔暟鍑忔硶锛?====
+  // item: 鍟嗗搧  price: 浠锋牸  paid: 椤惧浠樼殑閽? answer: 鎵鹃浂
   2: [
     {
-      emoji: '🍿', name: '爆米花', price: 6.50,
+      emoji: '馃嵖', name: '鐖嗙背鑺?, price: 6.50,
       paid: 10,
       answer: 3.50,
       hint: '10 - 6.50 = ?'
     },
     {
-      emoji: '🍦', name: '冰淇淋', price: 4.25,
+      emoji: '馃崷', name: '鍐版穱娣?, price: 4.25,
       paid: 10,
       answer: 5.75,
       hint: '10 - 4.25 = ?'
     },
     {
-      emoji: '🎂', name: '蛋糕', price: 8.60,
+      emoji: '馃巶', name: '铔嬬硶', price: 8.60,
       paid: 20,
       answer: 11.40,
       hint: '20 - 8.60 = ?'
     },
     {
-      emoji: '🎒', name: '书包', price: 35.80,
+      emoji: '馃帓', name: '涔﹀寘', price: 35.80,
       paid: 50,
       answer: 14.20,
       hint: '50 - 35.80 = ?'
     },
     {
-      emoji: '⚽', name: '足球', price: 28.50,
+      emoji: '鈿?, name: '瓒崇悆', price: 28.50,
       paid: 50,
       answer: 21.50,
       hint: '50 - 28.50 = ?'
     },
     {
-      emoji: '🎲', name: '桌游', price: 42.75,
+      emoji: '馃幉', name: '妗屾父', price: 42.75,
       paid: 100,
       answer: 57.25,
       hint: '100 - 42.75 = ?'
     }
   ],
 
-  // ===== 第三章：进货单（位数不同的小数加减）
-  // op: '+' 或 '-'  a, b: 两个数  answer  choices
-  // verticalLines: 竖式展示的行（含补0提示）
-  3: [
+  // ===== 绗笁绔狅細杩涜揣鍗曪紙浣嶆暟涓嶅悓鐨勫皬鏁板姞鍑忥級
+  // op: '+' 鎴?'-'  a, b: 涓や釜鏁? answer  choices
+  // verticalLines: 绔栧紡灞曠ず鐨勮锛堝惈琛?鎻愮ず锛?  3: [
     {
-      emoji: '✏️', name1: '铅笔', name2: '橡皮',
+      emoji: '鉁忥笍', name1: '閾呯瑪', name2: '姗＄毊',
       op: '+', a: 3.5, b: 1.26,
       answer: 4.76,
       choices: [4.76, 4.85, 3.76],
-      hint: '位数不同！3.5 要补成 3.50 再加'
+      hint: '浣嶆暟涓嶅悓锛?.5 瑕佽ˉ鎴?3.50 鍐嶅姞'
     },
     {
-      emoji: '📏', name1: '直尺', name2: '胶棒',
+      emoji: '馃搹', name1: '鐩村昂', name2: '鑳舵',
       op: '+', a: 2.8, b: 4.56,
       answer: 7.36,
       choices: [7.36, 6.36, 7.46],
-      hint: '2.8 补成 2.80 再计算'
+      hint: '2.8 琛ユ垚 2.80 鍐嶈绠?
     },
     {
-      emoji: '🖍️', name1: '蜡笔', name2: '贴纸',
+      emoji: '馃枍锔?, name1: '铚＄瑪', name2: '璐寸焊',
       op: '-', a: 5.4, b: 2.18,
       answer: 3.22,
       choices: [3.22, 3.32, 2.22],
-      hint: '5.4 补成 5.40 再减'
+      hint: '5.4 琛ユ垚 5.40 鍐嶅噺'
     },
     {
-      emoji: '📕', name1: '字典', name2: '书签',
+      emoji: '馃摃', name1: '瀛楀吀', name2: '涔︾',
       op: '-', a: 12.6, b: 3.85,
       answer: 8.75,
       choices: [8.75, 8.85, 9.75],
-      hint: '12.6 补成 12.60 再减'
+      hint: '12.6 琛ユ垚 12.60 鍐嶅噺'
     },
     {
-      emoji: '🎨', name1: '颜料', name2: '画笔',
+      emoji: '馃帹', name1: '棰滄枡', name2: '鐢荤瑪',
       op: '+', a: 6.5, b: 8.73,
       answer: 15.23,
       choices: [15.23, 14.23, 15.33],
-      hint: '6.5 补成 6.50 再加，注意进位'
+      hint: '6.5 琛ユ垚 6.50 鍐嶅姞锛屾敞鎰忚繘浣?
     }
   ],
 
-  // ===== 第四章：特价大挑战（混合运算 + 简便计算）
-  // question: HTML题目  answer  choices
+  // ===== 绗洓绔狅細鐗逛环澶ф寫鎴橈紙娣峰悎杩愮畻 + 绠€渚胯绠楋級
+  // question: HTML棰樼洰  answer  choices
   4: [
     {
-      question: '薯片原价 <span class="pq-price">12.80元</span>，现在特价 <span class="pq-save">9.90元</span><br>便宜了多少钱？',
+      question: '钖墖鍘熶环 <span class="pq-price">12.80鍏?/span>锛岀幇鍦ㄧ壒浠?<span class="pq-save">9.90鍏?/span><br>渚垮疁浜嗗灏戦挶锛?,
       answer: 2.90,
       choices: [2.90, 3.10, 2.80]
     },
     {
-      question: '买了三样东西：<br><span class="pq-price">5.36元</span> + <span class="pq-price">2.78元</span> + <span class="pq-price">4.64元</span><br>一共多少钱？（试试凑整！）',
+      question: '涔颁簡涓夋牱涓滆タ锛?br><span class="pq-price">5.36鍏?/span> + <span class="pq-price">2.78鍏?/span> + <span class="pq-price">4.64鍏?/span><br>涓€鍏卞灏戦挶锛燂紙璇曡瘯鍑戞暣锛侊級',
       answer: 12.78,
       choices: [12.78, 11.78, 12.88]
     },
     {
-      question: '小明有 <span class="pq-price">20元</span>，买了 <span class="pq-price">6.80元</span> 的笔和 <span class="pq-price">5.50元</span> 的本子<br>还剩多少钱？',
+      question: '灏忔槑鏈?<span class="pq-price">20鍏?/span>锛屼拱浜?<span class="pq-price">6.80鍏?/span> 鐨勭瑪鍜?<span class="pq-price">5.50鍏?/span> 鐨勬湰瀛?br>杩樺墿澶氬皯閽憋紵',
       answer: 7.70,
       choices: [7.70, 7.80, 8.70]
     },
     {
-      question: '买四样零食：<br><span class="pq-price">3.45元</span> + <span class="pq-price">6.55元</span> + <span class="pq-price">2.18元</span> + <span class="pq-price">7.82元</span><br>一共多少钱？（能凑整的两对！）',
+      question: '涔板洓鏍烽浂椋燂細<br><span class="pq-price">3.45鍏?/span> + <span class="pq-price">6.55鍏?/span> + <span class="pq-price">2.18鍏?/span> + <span class="pq-price">7.82鍏?/span><br>涓€鍏卞灏戦挶锛燂紙鑳藉噾鏁寸殑涓ゅ锛侊級',
       answer: 20.00,
       choices: [20.00, 19.00, 18.00]
     },
     {
-      question: '书包 <span class="pq-price">45.60元</span>，文具盒 <span class="pq-price">18.75元</span><br>妈妈付了 <span class="pq-price">100元</span>，应找回多少钱？',
+      question: '涔﹀寘 <span class="pq-price">45.60鍏?/span>锛屾枃鍏风洅 <span class="pq-price">18.75鍏?/span><br>濡堝浠樹簡 <span class="pq-price">100鍏?/span>锛屽簲鎵惧洖澶氬皯閽憋紵',
       answer: 35.65,
       choices: [35.65, 34.65, 36.35]
     },
     {
-      question: '昨天买了 <span class="pq-price">15.80元</span> 的东西<br>今天又买了 <span class="pq-price">23.40元</span> 的东西<br>两天一共花了多少钱？',
+      question: '鏄ㄥぉ涔颁簡 <span class="pq-price">15.80鍏?/span> 鐨勪笢瑗?br>浠婂ぉ鍙堜拱浜?<span class="pq-price">23.40鍏?/span> 鐨勪笢瑗?br>涓ゅぉ涓€鍏辫姳浜嗗灏戦挶锛?,
       answer: 39.20,
       choices: [39.20, 38.20, 39.30]
     }
@@ -192,8 +186,7 @@ var LEVELS = {
 };
 
 // ============================================================
-// 游戏状态
-// ============================================================
+// 娓告垙鐘舵€?// ============================================================
 
 var currentChapter = 1;
 var currentLevel = 0;
@@ -206,18 +199,17 @@ var hpMax = 3;
 var correctCount = 0;
 var wrongCount = 0;
 
-// 模式1锁定
+// 妯″紡1閿佸畾
 var mode1Locked = false;
-// 模式2：已选硬币
-var selectedCoins = [];
+// 妯″紡2锛氬凡閫夌‖甯?var selectedCoins = [];
 var mode2Locked = false;
-// 模式3锁定
+// 妯″紡3閿佸畾
 var mode3Locked = false;
-// 模式4锁定
+// 妯″紡4閿佸畾
 var mode4Locked = false;
 
 // ============================================================
-// 章节选择
+// 绔犺妭閫夋嫨
 // ============================================================
 
 function selectChapter(ch, event) {
@@ -233,8 +225,7 @@ function selectChapter(ch, event) {
 }
 
 // ============================================================
-// 开始关卡
-// ============================================================
+// 寮€濮嬪叧鍗?// ============================================================
 
 function startLevel() {
   var levels = LEVELS[currentChapter];
@@ -250,7 +241,7 @@ function startLevel() {
   updateHUD();
   updateProgress();
 
-  document.getElementById('levelInfo').textContent = '第 ' + (currentLevel + 1) + ' 关';
+  document.getElementById('levelInfo').textContent = '绗?' + (currentLevel + 1) + ' 鍏?;
   document.getElementById('questionText').textContent = currentLevelData.hint || '';
 
   hideAllModes();
@@ -267,7 +258,7 @@ function hideAllModes() {
 }
 
 // ============================================================
-// 通用：答对 / 答错
+// 閫氱敤锛氱瓟瀵?/ 绛旈敊
 // ============================================================
 
 function onCorrect() {
@@ -279,7 +270,7 @@ function onCorrect() {
   else if (combo >= 3) points = 20;
   score += points;
   updateHUD();
-  showToast('✅', '答对了！' + (combo >= 3 ? '🔥' + combo + '连击！' : ''), 1200);
+  showToast('鉁?, '绛斿浜嗭紒' + (combo >= 3 ? '馃敟' + combo + '杩炲嚮锛? : ''), 1200);
   setTimeout(function() { currentLevel++; startLevel(); }, 1400);
 }
 
@@ -289,16 +280,15 @@ function onWrong() {
   hp = Math.max(0, hp - 1);
   updateHUD();
   if (hp <= 0) {
-    showToast('💔', '血量用完了…', 1500);
+    showToast('馃挃', '琛€閲忕敤瀹屼簡鈥?, 1500);
     setTimeout(function() { showResult(); }, 1600);
   } else {
-    showToast('❌', '再想想！还剩 ' + hp + ' 颗心', 1200);
+    showToast('鉂?, '鍐嶆兂鎯筹紒杩樺墿 ' + hp + ' 棰楀績', 1200);
   }
 }
 
 // ============================================================
-// 模式1：收银台（小数加法 - 选总价）
-// ============================================================
+// 妯″紡1锛氭敹閾跺彴锛堝皬鏁板姞娉?- 閫夋€讳环锛?// ============================================================
 
 function startMode1() {
   var modeEl = document.getElementById('mode1');
@@ -306,7 +296,7 @@ function startMode1() {
 
   var data = currentLevelData;
 
-  // 渲染商品卡片
+  // 娓叉煋鍟嗗搧鍗＄墖
   var rowEl = document.getElementById('productRow');
   rowEl.innerHTML = '';
 
@@ -317,10 +307,10 @@ function startMode1() {
     card.innerHTML =
       '<div class="product-emoji">' + item.emoji + '</div>' +
       '<div class="product-name">' + item.name + '</div>' +
-      '<div class="product-price">' + item.price.toFixed(2) + ' 元</div>';
+      '<div class="product-price">' + item.price.toFixed(2) + ' 鍏?/div>';
     rowEl.appendChild(card);
 
-    // 加号
+    // 鍔犲彿
     if (i < data.items.length - 1) {
       var plus = document.createElement('div');
       plus.className = 'product-plus';
@@ -329,10 +319,9 @@ function startMode1() {
     }
   }
 
-  // 收银机显示
-  document.getElementById('totalValue').textContent = '? 元';
+  // 鏀堕摱鏈烘樉绀?  document.getElementById('totalValue').textContent = '? 鍏?;
 
-  // 选项
+  // 閫夐」
   var choicesEl = document.getElementById('cashierChoices');
   choicesEl.innerHTML = '';
   var shuffled = data.choices.slice();
@@ -357,7 +346,7 @@ function submitCashier(btnEl) {
 
   if (Math.abs(val - currentLevelData.answer) < 0.001) {
     btnEl.classList.add('correct');
-    document.getElementById('totalValue').textContent = formatMoney(currentLevelData.answer) + ' 元';
+    document.getElementById('totalValue').textContent = formatMoney(currentLevelData.answer) + ' 鍏?;
     document.getElementById('totalValue').style.color = '#4ADE80';
     onCorrect();
   } else {
@@ -372,7 +361,7 @@ function submitCashier(btnEl) {
 }
 
 // ============================================================
-// 模式2：找零钱（小数减法 - 选硬币找零）
+// 妯″紡2锛氭壘闆堕挶锛堝皬鏁板噺娉?- 閫夌‖甯佹壘闆讹級
 // ============================================================
 
 function startMode2() {
@@ -382,41 +371,40 @@ function startMode2() {
   var data = currentLevelData;
   selectedCoins = [];
 
-  // 商品信息
+  // 鍟嗗搧淇℃伅
   var infoEl = document.getElementById('changeInfo');
   infoEl.innerHTML =
-    data.emoji + ' ' + data.name + '：<span class="highlight">' + formatMoney(data.price) + ' 元</span><br>' +
-    '顾客付了：<span class="highlight">' + formatMoney(data.paid) + ' 元</span>';
+    data.emoji + ' ' + data.name + '锛?span class="highlight">' + formatMoney(data.price) + ' 鍏?/span><br>' +
+    '椤惧浠樹簡锛?span class="highlight">' + formatMoney(data.paid) + ' 鍏?/span>';
 
-  // 目标找零
+  // 鐩爣鎵鹃浂
   var targetEl = document.getElementById('changeTarget');
-  targetEl.textContent = '🎯 需要找零：' + formatMoney(data.answer) + ' 元';
+  targetEl.textContent = '馃幆 闇€瑕佹壘闆讹細' + formatMoney(data.answer) + ' 鍏?;
 
-  // 硬币托盘
+  // 纭竵鎵樼洏
   var trayEl = document.getElementById('coinTray');
   trayEl.innerHTML = '';
 
   var coinTypes = [
-    { val: 5, cls: 'coin-5yuan', label: '5元' },
-    { val: 1, cls: 'coin-1yuan', label: '1元' },
-    { val: 0.5, cls: 'coin-5jiao', label: '5角' },
-    { val: 0.1, cls: 'coin-1jiao', label: '1角' }
+    { val: 5, cls: 'coin-5yuan', label: '5鍏? },
+    { val: 1, cls: 'coin-1yuan', label: '1鍏? },
+    { val: 0.5, cls: 'coin-5jiao', label: '5瑙? },
+    { val: 0.1, cls: 'coin-1jiao', label: '1瑙? }
   ];
 
   for (var i = 0; i < coinTypes.length; i++) {
-    // 每种硬币放3个
-    for (var k = 0; k < 3; k++) {
+    // 姣忕纭竵鏀?涓?    for (var k = 0; k < 3; k++) {
       (function(ct) {
         var coin = document.createElement('div');
         coin.className = 'coin ' + ct.cls;
-        coin.innerHTML = '<span class="coin-symbol">¥</span><span class="coin-val">' + ct.label + '</span>';
+        coin.innerHTML = '<span class="coin-symbol">楼</span><span class="coin-val">' + ct.label + '</span>';
         coin.onclick = function() { addCoin(ct.val); };
         trayEl.appendChild(coin);
       })(coinTypes[i]);
     }
   }
 
-  // 隐藏结果
+  // 闅愯棌缁撴灉
   var resultEl = document.getElementById('changeResult');
   resultEl.classList.add('hidden');
   resultEl.className = 'change-result hidden';
@@ -445,26 +433,25 @@ function updateChangeDisplay() {
   var resultEl = document.getElementById('changeResult');
   resultEl.classList.remove('hidden');
 
-  // 显示已选硬币
-  var coinText = selectedCoins.length > 0
+  // 鏄剧ず宸查€夌‖甯?  var coinText = selectedCoins.length > 0
     ? selectedCoins.map(function(c) {
-        if (c >= 1) return c + '元';
-        if (c === 0.5) return '5角';
-        return '1角';
+        if (c >= 1) return c + '鍏?;
+        if (c === 0.5) return '5瑙?;
+        return '1瑙?;
       }).join(' + ')
-    : '还没选硬币';
+    : '杩樻病閫夌‖甯?;
 
   if (Math.abs(total - target) < 0.001) {
     resultEl.className = 'change-result exact';
-    resultEl.innerHTML = '✅ ' + coinText + ' = ' + formatMoney(total) + ' 元 · 刚好！';
+    resultEl.innerHTML = '鉁?' + coinText + ' = ' + formatMoney(total) + ' 鍏?路 鍒氬ソ锛?;
     document.getElementById('changeConfirmBtn').disabled = false;
   } else if (total > target) {
     resultEl.className = 'change-result over';
-    resultEl.innerHTML = '⚠️ ' + coinText + ' = ' + formatMoney(total) + ' 元 · 多了！';
+    resultEl.innerHTML = '鈿狅笍 ' + coinText + ' = ' + formatMoney(total) + ' 鍏?路 澶氫簡锛?;
     document.getElementById('changeConfirmBtn').disabled = true;
   } else {
     resultEl.className = 'change-result not-enough';
-    resultEl.innerHTML = '🪙 已选 ' + coinText + ' = ' + formatMoney(total) + ' 元（还差 ' + formatMoney(target - total) + ' 元）';
+    resultEl.innerHTML = '馃獧 宸查€?' + coinText + ' = ' + formatMoney(total) + ' 鍏冿紙杩樺樊 ' + formatMoney(target - total) + ' 鍏冿級';
     document.getElementById('changeConfirmBtn').disabled = true;
   }
 }
@@ -475,8 +462,20 @@ function confirmChange() {
   onCorrect();
 }
 
+// 【修复 #3】跳过当前找零题
+function skipChange() {
+  if (mode2Locked) return;
+  mode2Locked = true;
+  onWrong();
+  showToast('⏭️', '已跳过！正确答案是 ' + formatMoney(currentLevelData.answer) + ' 元', 1500);
+  setTimeout(function() {
+    currentLevel++;
+    startLevel();
+  }, 1600);
+}
+
 // ============================================================
-// 模式3：进货单（位数不同竖式）
+// 妯″紡3锛氳繘璐у崟锛堜綅鏁颁笉鍚岀珫寮忥級
 // ============================================================
 
 function startMode3() {
@@ -485,32 +484,32 @@ function startMode3() {
 
   var data = currentLevelData;
 
-  // 进货信息
+  // 杩涜揣淇℃伅
   var itemsEl = document.getElementById('receiptItems');
   itemsEl.innerHTML =
     '<div class="receipt-item-line">' +
       '<span class="receipt-item-emoji">' + data.emoji + '</span>' +
-      '<span>' + data.name1 + '：</span>' +
-      '<span class="receipt-item-price">' + data.a + ' 元</span>' +
+      '<span>' + data.name1 + '锛?/span>' +
+      '<span class="receipt-item-price">' + data.a + ' 鍏?/span>' +
     '</div>' +
     '<div class="receipt-item-line">' +
-      '<span style="font-size:18px;font-weight:bold;margin:0 4px">' + (data.op === '+' ? '＋' : '－') + '</span>' +
-      '<span>' + data.name2 + '：</span>' +
-      '<span class="receipt-item-price">' + data.b + ' 元</span>' +
+      '<span style="font-size:18px;font-weight:bold;margin:0 4px">' + (data.op === '+' ? '锛? : '锛?) + '</span>' +
+      '<span>' + data.name2 + '锛?/span>' +
+      '<span class="receipt-item-price">' + data.b + ' 鍏?/span>' +
     '</div>';
 
-  // 竖式计算展示
+  // 绔栧紡璁＄畻灞曠ず
   var calcEl = document.getElementById('verticalCalc');
   var aStr = data.a.toString();
   var bStr = data.b.toString();
 
-  // 补0对齐
+  // 琛?瀵归綈
   var aDec = aStr.split('.');
   var bDec = bStr.split('.');
   var aInt = aDec[0], aFrac = aDec[1] || '';
   var bInt = bDec[0], bFrac = bDec[1] || '';
 
-  // 小数位数对齐
+  // 灏忔暟浣嶆暟瀵归綈
   var maxFrac = Math.max(aFrac.length, bFrac.length);
   var aPad = aFrac;
   var bPad = bFrac;
@@ -526,7 +525,7 @@ function startMode3() {
     bPadHighlight = true;
   }
 
-  // 整数位数对齐
+  // 鏁存暟浣嶆暟瀵归綈
   var maxInt = Math.max(aInt.length, bInt.length);
   aInt = repeatStr(' ', maxInt - aInt.length) + aInt;
   bInt = repeatStr(' ', maxInt - bInt.length) + bInt;
@@ -534,32 +533,28 @@ function startMode3() {
   var aFull = aInt + '.' + aPad;
   var bFull = bInt + '.' + bPad;
 
-  // 构建竖式HTML
+  // 鏋勫缓绔栧紡HTML
   var html = '';
 
-  // 第一行
-  html += '<div class="vc-line">' + renderVcLine(aFull, aPadHighlight, maxFrac) + '</div>';
+  // 绗竴琛?  html += '<div class="vc-line">' + renderVcLine(aFull, aPadHighlight, maxFrac) + '</div>';
 
-  // 第二行（运算符 + 第二个数）
-  var opChar = data.op === '+' ? '＋' : '－';
+  // 绗簩琛岋紙杩愮畻绗?+ 绗簩涓暟锛?  var opChar = data.op === '+' ? '锛? : '锛?;
   html += '<div class="vc-line"><span class="vc-operator">' + opChar + '</span> ' + renderVcLine(bFull, bPadHighlight, maxFrac) + '</div>';
 
-  // 分隔线
-  html += '<div class="vc-separator"></div>';
+  // 鍒嗛殧绾?  html += '<div class="vc-separator"></div>';
 
-  // 结果行
-  html += '<div class="vc-line"><span class="vc-result">  = ?</span></div>';
+  // 缁撴灉琛?  html += '<div class="vc-line"><span class="vc-result">  = ?</span></div>';
 
   calcEl.innerHTML = html;
 
-  // 提示
+  // 鎻愮ず
   if (aPadHighlight || bPadHighlight) {
-    document.getElementById('mode3Hint').textContent = '📋 红色下划线的 0 是补上去的，小数点要对齐！';
+    document.getElementById('mode3Hint').textContent = '馃搵 绾㈣壊涓嬪垝绾跨殑 0 鏄ˉ涓婂幓鐨勶紝灏忔暟鐐硅瀵归綈锛?;
   } else {
-    document.getElementById('mode3Hint').textContent = '📋 对齐小数点，逐位计算';
+    document.getElementById('mode3Hint').textContent = '馃搵 瀵归綈灏忔暟鐐癸紝閫愪綅璁＄畻';
   }
 
-  // 选项
+  // 閫夐」
   var choicesEl = document.getElementById('receiptChoices');
   choicesEl.innerHTML = '';
   var shuffled = data.choices.slice();
@@ -575,9 +570,8 @@ function startMode3() {
 }
 
 function renderVcLine(full, padHighlight, maxFrac) {
-  // full: "12.60" 这样的字符串
-  // padHighlight: 需要高亮补0的部分
-  var html = '';
+  // full: "12.60" 杩欐牱鐨勫瓧绗︿覆
+  // padHighlight: 闇€瑕侀珮浜ˉ0鐨勯儴鍒?  var html = '';
   for (var i = 0; i < full.length; i++) {
     var ch = full[i];
     if (ch === '.') {
@@ -601,7 +595,7 @@ function submitReceipt(btnEl) {
 
   if (Math.abs(val - currentLevelData.answer) < 0.001) {
     btnEl.classList.add('correct');
-    // 显示结果
+    // 鏄剧ず缁撴灉
     var resultLine = document.querySelector('.vc-line .vc-result');
     if (resultLine) resultLine.textContent = '  = ' + formatMoney(currentLevelData.answer);
     onCorrect();
@@ -617,7 +611,7 @@ function submitReceipt(btnEl) {
 }
 
 // ============================================================
-// 模式4：特价大挑战（混合运算选择题）
+// 妯″紡4锛氱壒浠峰ぇ鎸戞垬锛堟贩鍚堣繍绠楅€夋嫨棰橈級
 // ============================================================
 
 function startMode4() {
@@ -626,7 +620,7 @@ function startMode4() {
 
   var data = currentLevelData;
 
-  var banners = ['🔥 限时特惠', '🎉 超级促销', '💰 清仓大甩卖', '🎁 买就划算', '🏷️ 今日特价'];
+  var banners = ['馃敟 闄愭椂鐗规儬', '馃帀 瓒呯骇淇冮攢', '馃挵 娓呬粨澶х敥鍗?, '馃巵 涔板氨鍒掔畻', '馃彿锔?浠婃棩鐗逛环'];
   document.getElementById('promoBanner').textContent = banners[currentLevel % banners.length];
 
   document.getElementById('promoQuestion').innerHTML = data.question;
@@ -638,7 +632,7 @@ function startMode4() {
   for (var i = 0; i < shuffled.length; i++) {
     var btn = document.createElement('button');
     btn.className = 'promo-choice';
-    btn.textContent = formatMoney(shuffled[i]) + ' 元';
+    btn.textContent = formatMoney(shuffled[i]) + ' 鍏?;
     btn.dataset.value = shuffled[i];
     btn.onclick = function() { submitPromo(this); };
     choicesEl.appendChild(btn);
@@ -668,17 +662,17 @@ function submitPromo(btnEl) {
 }
 
 // ============================================================
-// HUD / 进度
+// HUD / 杩涘害
 // ============================================================
 
 function updateHUD() {
   var hearts = '';
   for (var i = 0; i < hpMax; i++) {
-    hearts += '<span' + (i < hp ? '' : ' style="opacity:0.3"') + '>❤️</span>';
+    hearts += '<span' + (i < hp ? '' : ' style="opacity:0.3"') + '>鉂わ笍</span>';
   }
   document.getElementById('heartsDisplay').innerHTML = hearts;
   document.getElementById('scoreDisplay').textContent = score;
-  document.getElementById('comboDisplay').textContent = combo >= 2 ? '🔥' + combo + '连击' : '';
+  document.getElementById('comboDisplay').textContent = combo >= 2 ? '馃敟' + combo + '杩炲嚮' : '';
 }
 
 function updateProgress() {
@@ -689,7 +683,7 @@ function updateProgress() {
 }
 
 // ============================================================
-// 结果画面
+// 缁撴灉鐢婚潰
 // ============================================================
 
 function showResult() {
@@ -699,8 +693,8 @@ function showResult() {
   var levels = LEVELS[currentChapter];
   var allDone = currentLevel >= levels.length;
 
-  document.getElementById('resultEmoji').textContent = allDone ? '🏆' : '💪';
-  document.getElementById('resultTitle').textContent = allDone ? '全部通关！金牌收银员！' : '别灰心，再来一次！';
+  document.getElementById('resultEmoji').textContent = allDone ? '馃弳' : '馃挭';
+  document.getElementById('resultTitle').textContent = allDone ? '鍏ㄩ儴閫氬叧锛侀噾鐗屾敹閾跺憳锛? : '鍒伆蹇冿紝鍐嶆潵涓€娆★紒';
 
   var earnedStars = allDone ? 15 + hp * 3 : Math.max(0, currentLevel * 2 + hp);
   if (earnedStars > 0) addStars(earnedStars);
@@ -709,22 +703,22 @@ function showResult() {
     ? Math.round(correctCount / (correctCount + wrongCount) * 100) : 0;
 
   var statsHtml = '';
-  statsHtml += '<div class="stat-row"><span>🏆 得分：</span><strong>' + score + '</strong></div>';
-  statsHtml += '<div class="stat-row"><span>❤️ 剩余血量：</span><strong>' + hp + '/' + hpMax + '</strong></div>';
-  statsHtml += '<div class="stat-row"><span>🔥 最高连击：</span><strong>' + maxCombo + '</strong></div>';
-  statsHtml += '<div class="stat-row"><span>✅ 正确率：</span><strong>' + rate + '%</strong></div>';
-  statsHtml += '<div class="stat-row"><span>⭐ 获得星星：</span><strong>⭐ ' + earnedStars + '</strong></div>';
+  statsHtml += '<div class="stat-row"><span>馃弳 寰楀垎锛?/span><strong>' + score + '</strong></div>';
+  statsHtml += '<div class="stat-row"><span>鉂わ笍 鍓╀綑琛€閲忥細</span><strong>' + hp + '/' + hpMax + '</strong></div>';
+  statsHtml += '<div class="stat-row"><span>馃敟 鏈€楂樿繛鍑伙細</span><strong>' + maxCombo + '</strong></div>';
+  statsHtml += '<div class="stat-row"><span>鉁?姝ｇ‘鐜囷細</span><strong>' + rate + '%</strong></div>';
+  statsHtml += '<div class="stat-row"><span>猸?鑾峰緱鏄熸槦锛?/span><strong>猸?' + earnedStars + '</strong></div>';
 
-  var chapterNames = { 1:'小数加法', 2:'小数减法', 3:'位数不同的小数加减', 4:'小数混合运算' };
+  var chapterNames = { 1:'灏忔暟鍔犳硶', 2:'灏忔暟鍑忔硶', 3:'浣嶆暟涓嶅悓鐨勫皬鏁板姞鍑?, 4:'灏忔暟娣峰悎杩愮畻' };
   var chapterTips = {
-    1: '小数加法：先把小数点对齐（相同数位对齐），再按整数加法计算，最后在结果里点上小数点。',
-    2: '小数减法：同样先对齐小数点。如果被减数位数不够，用0补齐再减。注意退位！',
-    3: '位数不同时，在末尾补0使小数位数相同，再对齐小数点计算。例如 3.5 + 1.26 → 3.50 + 1.26',
-    4: '混合运算中，能凑整的先凑整！如 5.36 + 4.64 = 10，再算剩下的，又快又准。'
+    1: '灏忔暟鍔犳硶锛氬厛鎶婂皬鏁扮偣瀵归綈锛堢浉鍚屾暟浣嶅榻愶級锛屽啀鎸夋暣鏁板姞娉曡绠楋紝鏈€鍚庡湪缁撴灉閲岀偣涓婂皬鏁扮偣銆?,
+    2: '灏忔暟鍑忔硶锛氬悓鏍峰厛瀵归綈灏忔暟鐐广€傚鏋滆鍑忔暟浣嶆暟涓嶅锛岀敤0琛ラ綈鍐嶅噺銆傛敞鎰忛€€浣嶏紒',
+    3: '浣嶆暟涓嶅悓鏃讹紝鍦ㄦ湯灏捐ˉ0浣垮皬鏁颁綅鏁扮浉鍚岋紝鍐嶅榻愬皬鏁扮偣璁＄畻銆備緥濡?3.5 + 1.26 鈫?3.50 + 1.26',
+    4: '娣峰悎杩愮畻涓紝鑳藉噾鏁寸殑鍏堝噾鏁达紒濡?5.36 + 4.64 = 10锛屽啀绠楀墿涓嬬殑锛屽張蹇張鍑嗐€?
   };
   statsHtml += '<div class="knowledge-card">';
-  statsHtml += '<h3>📚 本关知识点：' + chapterNames[currentChapter] + '</h3>';
-  statsHtml += '<p>💡 ' + chapterTips[currentChapter] + '</p>';
+  statsHtml += '<h3>馃摎 鏈叧鐭ヨ瘑鐐癸細' + chapterNames[currentChapter] + '</h3>';
+  statsHtml += '<p>馃挕 ' + chapterTips[currentChapter] + '</p>';
   statsHtml += '</div>';
 
   document.getElementById('resultStats').innerHTML = statsHtml;
@@ -732,8 +726,7 @@ function showResult() {
 }
 
 // ============================================================
-// 重新开始
-// ============================================================
+// 閲嶆柊寮€濮?// ============================================================
 
 function restartGame() {
   score = 0; combo = 0; maxCombo = 0; hp = 3;
@@ -744,7 +737,7 @@ function restartGame() {
 }
 
 // ============================================================
-// 工具函数
+// 宸ュ叿鍑芥暟
 // ============================================================
 
 function shuffleArray(arr) {
@@ -765,3 +758,4 @@ function repeatStr(s, n) {
 }
 
 initStars();
+

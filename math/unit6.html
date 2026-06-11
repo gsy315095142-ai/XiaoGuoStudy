@@ -114,6 +114,8 @@
     <div class="change-actions">
       <button class="change-btn btn-clear" onclick="clearCoins()">🗑️ 清空</button>
       <button class="change-btn btn-confirm" id="changeConfirmBtn" onclick="confirmChange()" disabled>✅ 确认找零</button>
+      <!-- 【修复 #3】添加跳过按钮，防止玩家卡死 -->
+      <button class="change-btn btn-skip" id="changeSkipBtn" onclick="skipChange()">⏭️ 跳过</button>
     </div>
     <div class="action-hint">🪙 点击硬币找零，凑出正确的金额！</div>
   </div>

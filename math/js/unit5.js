@@ -555,10 +555,10 @@ function playAssembleAnimation(a, b, c, success) {
         lines[j].setAttribute('stroke', '#27AE60');
       }
 
+      // 【修复 #1】将逗号拼接改为 + 号拼接，避免文字截断
       resultEl.className = 'assemble-result success';
       resultEl.innerHTML = '🎉 三根木棍首尾相连，搭成三角形！✅<br>' +
-        '<span style="font-size:14px;opacity:0.7">' + a + ' + ' + b + ' > ' + c + ' 等',
-        '满足三边关系</span>';
+        '<span style="font-size:14px;opacity:0.7">' + a + ' + ' + b + ' > ' + c + ' 等，满足三边关系</span>';
 
       onCorrect();
     } else {
@@ -583,13 +583,10 @@ function playAssembleAnimation(a, b, c, success) {
 
       onWrong();
 
-      // 答错后允许重试（解锁 + 重建UI）
+      // 【修复 #2】答错后标记失败并跳到下一题，不再恢复建造台允许无限重试
       setTimeout(function() {
-        mode1Locked = false;
-        // 隐藏动画，恢复建造台
-        document.getElementById('assembleStage').classList.add('hidden');
-        document.getElementById('buildStage').classList.remove('hidden');
-        document.getElementById('woodShelf').classList.remove('hidden');
+        currentLevel++;
+        startLevel();
       }, 1800);
     }
   }, 1600);
